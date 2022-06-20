@@ -2,7 +2,7 @@ import styles from './style';
 import {Image, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {CustomButton} from '../../customComponents';
+import CustomButton from '../../customComponents/CustomButton';
 
 export default function SplashScreen() {
   const navigation: any = useNavigation();

@@ -1,5 +1,5 @@
-import CustomHeader from './CustomHeader';
 import CustomButton from './CustomButton';
-import CustomText from './customText';
+import CustomHeader from './CustomHeader';
+import CustomTextInput from './CustomInput';
 
-export {CustomButton, CustomHeader, CustomText};
+export {CustomButton, CustomHeader, CustomTextInput};

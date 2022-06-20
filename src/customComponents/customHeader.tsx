@@ -10,9 +10,8 @@ import {
 import {useNavigation} from '@react-navigation/native';
 const {height, width} = Dimensions.get('window');
 export default function CustomHeader() {
-
   const navigation = useNavigation();
-  
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -35,9 +34,9 @@ const styles = StyleSheet.create({
   BackArrow: {
     left: 5,
     bottom: 0,
-    width: width / 7, 
+    width: width / 7,
     position: 'absolute',
-    },
+  },
   headerText: {
     left: 155,
     bottom: 2,

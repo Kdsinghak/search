@@ -1,17 +1,20 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {CustomText, CustomButton} from '../../../customComponents';
+import React, {useState} from 'react';
+import {CustomButton, CustomTextInput} from '../../../customComponents';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <View style={styles.container}>
-      <Text style={styles.txt}>Log in</Text>
-      <CustomText placeholder="jane@example.com" />
-      <CustomText placeholder="password" />
+      <Text style={styles.txt}>{'Log in'}</Text>
+      <CustomTextInput placeholder="jane@example.com" setText={setEmail} />
+      <CustomTextInput placeholder="password" setText={setPassword} />
       <CustomButton
         buttonStyle={styles.LoginButon}
         buttonText={styles.buttonText}
         title="LOG IN"
+        screen="Home"
       />
     </View>
   );
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
     height: 52,
     width: '90%',
     left: 16,
-    top: '50%',
+    top: '45%',
     position: 'absolute',
     borderColor: 'black',
     borderWidth: 2,
