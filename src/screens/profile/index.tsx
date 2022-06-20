@@ -1,24 +1,15 @@
 import React, {useState} from 'react';
-import {
-  Text,
-  View,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import {Text, View, Image, ActivityIndicator} from 'react-native';
 import styles from './style';
-import CustomHeader from '../../customComponents/customHeader';
+import CustomHeader from '../../customComponents/CustomHeader';
 
-export default function Profile({route}:any) {
-
-  
+export default function Profile({route}: any) {
   console.log(route.params);
   const {color} = route.params;
   const [isLoading, setLoader] = useState(false);
-  const {url}:{url:string|undefined} = route.params.item.images.original;
- 
- const {display_name, username, description} = route.params.item.user
+  const {display_name, username, description} = route.params.item.user;
+  const {url}: {url: string | undefined} = route.params.item.images.original;
 
- 
   return (
     <View style={styles.container}>
       <CustomHeader />
@@ -43,7 +34,7 @@ export default function Profile({route}:any) {
             />
           ) : null}
         </View>
-
+        0
         <View style={styles.displayNameView}>
           <Text style={styles.displayNameText}>{display_name}</Text>
           <Text style={styles.username}>@{username}</Text>
@@ -58,4 +49,3 @@ export default function Profile({route}:any) {
     </View>
   );
 }
-

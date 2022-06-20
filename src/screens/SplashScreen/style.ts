@@ -1,11 +1,46 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-    splashimg: {
-      width: '100%',
-      height: '100%',
-      resizeMode: 'cover',
-    },
-  });
-  
-  export default styles
+  container: {
+    flex: 1,
+  },
+  splashimg: {
+    width: '100%',
+    flex: 0.82,
+    resizeMode: 'cover',
+  },
+
+  loginButton: {
+    height: 52,
+    width: 167,
+    left: 16,
+    position: 'absolute',
+    top: '85%',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  registerButton: {
+    height: 52,
+    width: 167,
+    left: 192,
+    position: 'absolute',
+    top: '85%',
+    backgroundColor: '#000000',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loginText: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  registerText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
+
+export default styles;

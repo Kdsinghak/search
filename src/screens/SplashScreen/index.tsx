@@ -1,24 +1,38 @@
 import styles from './style';
-import {Image} from 'react-native';
-import React, {useEffect} from 'react';
-import screenNames from '../../utils/screenNames';
+import {Image, View, TouchableOpacity} from 'react-native';
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-
+import {CustomButton} from '../../customComponents';
 
 export default function SplashScreen() {
-  const navigation:any = useNavigation();
+  const navigation: any = useNavigation();
 
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate(screenNames.home);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     navigation.navigate(screenNames.home);
+  //   }, 2000);
+  // }, []);
 
   return (
-    <Image
-      source={require('../../assests/images/splashimg.jpeg')}
-      style={styles.splashimg}
-    />
+    <View style={styles.container}>
+      <Image
+        source={require('../../assests/images/Rectangle.png')}
+        style={styles.splashimg}
+      />
+
+      <CustomButton
+        buttonStyle={styles.loginButton}
+        buttonText={styles.loginText}
+        title="LOG IN"
+        screen="Login"
+      />
+
+      <CustomButton
+        buttonStyle={styles.registerButton}
+        buttonText={styles.registerText}
+        title="REGISTER"
+        screen="SignUp"
+      />
+    </View>
   );
 }
-
