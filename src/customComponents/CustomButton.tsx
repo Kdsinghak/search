@@ -3,15 +3,9 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 export default function CustomButton(props: any) {
-  const navigation: any = useNavigation();
-
-  const {buttonStyle, title, buttonText, screen} = props;
+  const {buttonStyle, title, buttonText, onPress} = props;
   return (
-    <TouchableOpacity
-      style={buttonStyle}
-      onPress={() => {
-        navigation.navigate(screen);
-      }}>
+    <TouchableOpacity style={buttonStyle} onPress={onPress}>
       <Text style={buttonText}>{title}</Text>
     </TouchableOpacity>
   );

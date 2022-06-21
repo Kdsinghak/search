@@ -34,7 +34,7 @@ export default function Profile({route}: any) {
             />
           ) : null}
         </View>
-        0
+
         <View style={styles.displayNameView}>
           <Text style={styles.displayNameText}>{display_name}</Text>
           <Text style={styles.username}>@{username}</Text>

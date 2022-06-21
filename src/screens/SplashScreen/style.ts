@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
   loginButton: {
     height: 52,
-    width: 167,
+    width: '40%',
     left: 16,
     position: 'absolute',
     top: '85%',
@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
   },
   registerButton: {
     height: 52,
-    width: 167,
-    left: 192,
+    width: '40%',
+    left: '55%',
     position: 'absolute',
     top: '85%',
     backgroundColor: '#000000',

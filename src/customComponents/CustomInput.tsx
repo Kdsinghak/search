@@ -10,7 +10,10 @@ export default function CustomTextInput(props: any) {
       <TextInput
         style={styles.textInput}
         placeholder={props.placeholder}
-        onChangeText={text => props.setText(text)}
+        onChangeText={text => {
+          props.setText(text);
+          console.log(' jhbdfjhefbwe', text);
+        }}
         secureTextEntry={secured}
       />
     </View>
@@ -19,13 +22,13 @@ export default function CustomTextInput(props: any) {
 
 const styles = StyleSheet.create({
   textInput: {
-    width: 343,
+    width: '90%',
     height: 52,
     left: 16,
     borderWidth: 2,
     borderColor: 'black',
     top: 176,
-    marginBottom: 10,
+    marginBottom: 30,
     padding: 10,
   },
 });

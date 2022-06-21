@@ -3,6 +3,7 @@ import {Image, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import CustomButton from '../../customComponents/CustomButton';
+import {Login, SignUp} from '../auth';
 
 export default function SplashScreen() {
   const navigation: any = useNavigation();
@@ -24,14 +25,18 @@ export default function SplashScreen() {
         buttonStyle={styles.loginButton}
         buttonText={styles.loginText}
         title="LOG IN"
-        screen="Login"
+        onPress={() => {
+          navigation.navigate('Login');
+        }}
       />
 
       <CustomButton
         buttonStyle={styles.registerButton}
         buttonText={styles.registerText}
         title="REGISTER"
-        screen="SignUp"
+        onPress={() => {
+          navigation.navigate('SignUp');
+        }}
       />
     </View>
   );

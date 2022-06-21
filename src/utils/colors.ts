@@ -1,5 +1,3 @@
-
-
 let colors = [
   '#99362f',
   '#FD6D2D',
