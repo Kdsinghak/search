@@ -1,10 +1,12 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {CustomTextInput, CustomButton} from '../../../customComponents';
 import regex from '../../../utils/regex';
 import {handleSignUp} from './action';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {useNavigation} from '@react-navigation/native';
 export default function SignUp() {
+  const navigation = useNavigation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
@@ -31,17 +33,34 @@ export default function SignUp() {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Icon name="reply" size={20} style={{marginTop: '20%', left: '5%'}} />
+      </TouchableOpacity>
       <Text style={styles.RegisterHeading}>Register</Text>
-      <CustomTextInput placeholder="Name" setText={setName} />
-      <CustomTextInput placeholder="Email" setText={onEnterEmail} />
-      <Text style={styles.validEmailText}>
-        {email.length > 0
-          ? validation(email)
-            ? ''
-            : ' Enter valid email'
-          : null}
-      </Text>
-      <CustomTextInput placeholder="Password" setText={onEnterPassword} />
+      <View style={styles.textInputView}>
+        <CustomTextInput
+          placeholder="Name"
+          setText={setName}
+          textInput={styles.textInput}
+        />
+        <CustomTextInput
+          placeholder="Email"
+          setText={onEnterEmail}
+          textInput={styles.textInput}
+        />
+        <Text style={styles.validEmailText}>
+          {email.length > 0
+            ? validation(email)
+              ? ''
+              : ' Enter valid email'
+            : null}
+        </Text>
+        <CustomTextInput
+          placeholder="Password"
+          setText={onEnterPassword}
+          textInput={styles.textInput}
+        />
+      </View>
       <Text style={styles.validPasswordText}>
         {Password.length > 0
           ? validation(Password)
@@ -76,7 +95,6 @@ const styles = StyleSheet.create({
   },
   RegisterButtonStyle: {
     left: 16,
-    top: '30%',
     height: 52,
     width: '90%',
     borderRadius: 8,
@@ -90,42 +108,34 @@ const styles = StyleSheet.create({
   },
   RegisterHeading: {
     left: 16,
-    top: 104,
     width: 148,
     height: 40,
     color: 'black',
     position: 'absolute',
+    marginVertical: '30%',
   },
   validEmailText: {
-    top: '18%',
     left: '3.5%',
     color: 'red',
   },
   validPasswordText: {
-    top: '18%',
     left: '4%',
     color: 'red',
   },
-});
-function sucessCallBack(
-  email: string,
-  Password: string,
-  sucessCallBack: any,
-  failureCallBack: any,
-) {
-  throw new Error('Function not implemented.');
-}
 
-function failureCallBack(
-  email: string,
-  Password: string,
-  sucessCallBack: (
-    email: string,
-    Password: string,
-    sucessCallBack: any,
-    failureCallBack: any,
-  ) => void,
-  failureCallBack: any,
-) {
-  throw new Error('Function not implemented.');
-}
+  textInput: {
+    width: '90%',
+    height: 52,
+    left: 16,
+    borderWidth: 2,
+    borderColor: 'black',
+    // marginBottom: 20,
+    marginVertical: 12,
+    padding: 10,
+    // backgroundColor: 'red',
+  },
+  textInputView: {
+    marginTop: '20%',
+    // backgroundColor: 'red',
+  },
+});

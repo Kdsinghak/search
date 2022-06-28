@@ -6,6 +6,8 @@ import SplashScreen from '../screens/SplashScreen';
 import Home from '../screens/home';
 import Profile from '../screens/profile';
 import {Login, SignUp} from '../screens/auth';
+import Setting from '../screens/setting/Setting';
+
 const Stack = createNativeStackNavigator();
 
 export default function Rootnavigation() {
@@ -17,6 +19,7 @@ export default function Rootnavigation() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Setting" component={Setting} />
       </Stack.Navigator>
     </NavigationContainer>
   );

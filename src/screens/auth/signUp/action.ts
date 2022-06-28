@@ -1,4 +1,4 @@
-// import auth from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 
 const handleSignUp = (
   email: string,
@@ -6,14 +6,14 @@ const handleSignUp = (
   onSucess: Function,
   onFailure: Function,
 ) => {
-  //   auth()
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then(sucess => {
-  //       onSucess(sucess);
-  //     })
-  //     .catch(err => {
-  //       onFailure(err);
-  //     });
+  auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(sucess => {
+      onSucess(sucess);
+    })
+    .catch(err => {
+      onFailure(err);
+    });
 };
 
 export {handleSignUp};

@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useReducer,
   useCallback,
-  MutableRefObject,
 } from 'react';
 import {
   View,
@@ -15,42 +14,37 @@ import {
   Keyboard,
   SafeAreaView,
   TouchableOpacity,
-  ActivityIndicator, 
+  ActivityIndicator,
 } from 'react-native';
 
 import styles from './style';
 import colors from '../../utils/colors';
 import callingAPI from '../../action/callingAPI';
-import {reducer , initialState} from './reducer';
+import {reducer, initialState} from './reducer';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { propsType } from '../../modal';
-
+import {propsType} from '../../modal';
 
 export default function Home() {
-
- 
-  const listRef:any= useRef(null);
-  const navigation:any = useNavigation();
+  const listRef: any = useRef(null);
+  const navigation: any = useNavigation();
   const [Networkerr, setNetworkErr] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const  debounce = (fun:Function, timeout:number) => {
-
+  const debounce = (fun: Function, timeout: number) => {
     let timer: string | number | NodeJS.Timeout | undefined;
-    return (args:string) => {
+    return (args: string) => {
       clearTimeout(timer);
       timer = setTimeout(() => {
         dispatch({type: 'data', payload: {data: []}});
-       
-        fun(args);
 
+        fun(args);
       }, timeout);
     };
-  }
+  };
 
   const processChange = useCallback(
-    debounce((search:string) =>{
+    debounce((search: string) => {
       callingAPI.getApi(
         search,
         state.offset,
@@ -63,12 +57,11 @@ export default function Home() {
             dispatch({type: 'data', payload: {data: [...Details]}});
           }
         },
-        (error:string) => {
+        (error: string) => {
           console.log(error);
         },
-      )
-} , 500
-    ),
+      );
+    }, 500),
     [],
   );
 
@@ -83,7 +76,7 @@ export default function Home() {
     callingAPI.getApi(
       state.search,
       state.offset,
-      (Details:Array<[]>) => {
+      (Details: Array<[]>) => {
         dispatch({type: 'offset', payload: {offset: state.offset + 10}});
         dispatch({type: 'loding', payload: {loding: false}});
 
@@ -94,14 +87,14 @@ export default function Home() {
               payload: {data: [...state.data, ...Details]},
             });
       },
-      (error:string) => {
+      (error: string) => {
         console.log(error);
       },
     );
   };
 
-  const renderItem = ({item, index}:{item:propsType , index:number}) => {
-    console.log(item)
+  const renderItem = ({item, index}: {item: propsType; index: number}) => {
+    console.log(item);
     let color = colors[index % colors.length];
     return (
       <TouchableOpacity
@@ -131,7 +124,18 @@ export default function Home() {
     />
   ) : (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.heading}>Search</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: '6%',
+        }}>
+        <Text style={styles.heading}>Search</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+          <Icon name="setting" size={30} />
+        </TouchableOpacity>
+      </View>
 
       <TextInput
         placeholder="Search"
@@ -147,7 +151,7 @@ export default function Home() {
 
       {state.data.length > 0 ? (
         <FlatList
-        ref={listRef}
+          ref={listRef}
           data={state.data}
           renderItem={renderItem}
           onEndReachedThreshold={0.5}
@@ -161,7 +165,7 @@ export default function Home() {
       <TouchableOpacity
         style={styles.backToTop}
         onPress={() => {
-          console.log("kjhgfdfghjk" ,listRef.current)
+          console.log('kjhgfdfghjk', listRef.current);
           listRef.current.scrollToOffset({offset: 0});
         }}>
         <Icon name={'arrowup'} size={30} />
@@ -171,6 +175,4 @@ export default function Home() {
       ) : null}
     </SafeAreaView>
   );
-
 }
-

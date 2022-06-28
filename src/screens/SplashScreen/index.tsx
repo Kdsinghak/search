@@ -1,18 +1,21 @@
 import styles from './style';
 import {Image, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import CustomButton from '../../customComponents/CustomButton';
-import {Login, SignUp} from '../auth';
+import auth from '@react-native-firebase/auth';
 
 export default function SplashScreen() {
   const navigation: any = useNavigation();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigation.navigate(screenNames.home);
-  //   }, 2000);
-  // }, []);
+  useEffect(() => {
+    const suscriber = auth().onAuthStateChanged(user => {
+      if (user) {
+        navigation.navigate('Home');
+      } else navigation.navigate('Login');
+    });
+    return suscriber;
+  }, []);
 
   return (
     <View style={styles.container}>
