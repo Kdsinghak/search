@@ -15,15 +15,16 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
+  StyleSheet,
 } from 'react-native';
 
 import styles from './style';
+import {propsType} from '../../modal';
 import colors from '../../utils/colors';
-import callingAPI from '../../action/callingAPI';
 import {reducer, initialState} from './reducer';
+import callingAPI from '../../action/callingAPI';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {propsType} from '../../modal';
 
 export default function Home() {
   const listRef: any = useRef(null);
@@ -94,7 +95,6 @@ export default function Home() {
   };
 
   const renderItem = ({item, index}: {item: propsType; index: number}) => {
-    console.log(item);
     let color = colors[index % colors.length];
     return (
       <TouchableOpacity
@@ -124,13 +124,7 @@ export default function Home() {
     />
   ) : (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingHorizontal: '6%',
-        }}>
+      <View style={styles.header}>
         <Text style={styles.heading}>Search</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <Icon name="setting" size={30} />
@@ -141,8 +135,9 @@ export default function Home() {
         placeholder="Search"
         style={styles.txtinput}
         onFocus={() => {
-          if (state.data.length > 0)
+          if (state.data.length > 0) {
             listRef.current.scrollToOffset({offset: 0});
+          }
         }}
         onChangeText={value => {
           dispatch({type: 'search', payload: {search: value}});

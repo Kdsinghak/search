@@ -6,6 +6,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: '6%',
+  },
   heading: {
     left: '10%',
     fontSize: 35,
@@ -19,7 +25,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: '5%',
     backgroundColor: '#e7e6ec',
-   
   },
   Card: {
     marginTop: '5%',

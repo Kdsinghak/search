@@ -1,5 +1,5 @@
 import styles from './style';
-import {Image, View, TouchableOpacity} from 'react-native';
+import {Image, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import CustomButton from '../../customComponents/CustomButton';
@@ -12,7 +12,9 @@ export default function SplashScreen() {
     const suscriber = auth().onAuthStateChanged(user => {
       if (user) {
         navigation.navigate('Home');
-      } else navigation.navigate('Login');
+      } else {
+        navigation.navigate('SplashScreen');
+      }
     });
     return suscriber;
   }, []);

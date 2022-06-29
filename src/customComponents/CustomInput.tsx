@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, TextInput} from 'react-native';
-import Icons from 'react-native-vector-icons/Feather';
+import {View, TextInput} from 'react-native';
+
 export default function CustomTextInput(props: any) {
   console.log('njdbwhf', props);
   const {textInput} = props;
@@ -21,5 +21,3 @@ export default function CustomTextInput(props: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});
