@@ -15,7 +15,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  StyleSheet,
 } from 'react-native';
 
 import styles from './style';
