@@ -6,6 +6,7 @@ import {normalize} from '../../../utils/dimensions';
 import {passwordTest, emailTest} from '../../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
 import styles from './style';
+import {handleSignUp} from './SignUpUtils';
 export default function SignUp() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
@@ -66,6 +67,18 @@ export default function SignUp() {
           buttonStyle={styles.registerButtonStyle}
           title={'Register'}
           buttonText={styles.textButtonName}
+          onPress={() =>
+            handleSignUp(
+              email,
+              password,
+              (sucess: any) => {
+                console.log(sucess);
+              },
+              (error: any) => {
+                console.log(error);
+              },
+            )
+          }
         />
 
         <Text style={styles.descriptionSignUpText}>
