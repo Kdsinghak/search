@@ -11,9 +11,9 @@ export default function SplashScreen() {
   useEffect(() => {
     const suscriber = auth().onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate('Home');
+        setTimeout(() => navigation.navigate('Home'), 1000);
       } else {
-        navigation.navigate('SplashScreen');
+        setTimeout(() => navigation.navigate('Login'), 1000);
       }
     });
     return suscriber;
@@ -26,7 +26,7 @@ export default function SplashScreen() {
         style={styles.splashimg}
       />
 
-      <CustomButton
+      {/* <CustomButton
         buttonStyle={styles.loginButton}
         buttonText={styles.loginText}
         title="LOG IN"
@@ -42,7 +42,7 @@ export default function SplashScreen() {
         onPress={() => {
           navigation.navigate('SignUp');
         }}
-      />
+      /> */}
     </View>
   );
 }

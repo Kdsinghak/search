@@ -24,6 +24,7 @@ import {reducer, initialState} from './reducer';
 import callingAPI from '../../action/callingAPI';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import auth from '@react-native-firebase/auth';
 
 export default function Home() {
   const listRef: any = useRef(null);

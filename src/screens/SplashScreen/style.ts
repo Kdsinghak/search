@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   },
   splashimg: {
     width: '100%',
-    flex: 0.82,
+    flex: 1,
     resizeMode: 'cover',
   },
 
