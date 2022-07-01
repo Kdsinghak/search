@@ -1,141 +1,82 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import {CustomTextInput, CustomButton} from '../../../customComponents';
-import regex from '../../../utils/regex';
-import {handleSignUp} from './action';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {normalize} from '../../../utils/dimensions';
+import {passwordTest, emailTest} from '../../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
+import styles from './style';
 export default function SignUp() {
   const navigation = useNavigation();
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
-
-  const onEnterPassword = (password: string) => {
-    setPassword(password);
-  };
-
-  const onEnterEmail = (email: string) => {
-    setEmail(email);
-  };
-
-  const validation = (text: string) => {
-    switch (text) {
-      case email:
-        return regex.emailRegex.test(text);
-      case Password:
-        return regex.passwordRegex.test(text);
-
-      default:
-        break;
-    }
-  };
-
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [confirmPassword, setConfirmPassowrd] = useState('');
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon name="reply" size={20} style={{marginTop: '20%', left: '5%'}} />
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}>
+        <Icon name="arrow-left" size={20} color={'white'} />
       </TouchableOpacity>
-      <Text style={styles.RegisterHeading}>Register</Text>
-      <View style={styles.textInputView}>
+
+      <Text style={styles.heading}>Register</Text>
+      <View style={styles.TextinputView}>
         <CustomTextInput
-          placeholder="Name"
+          placeholder="Full Name"
+          textInput={styles.textInputStyle}
           setText={setName}
-          textInput={styles.textInput}
         />
         <CustomTextInput
           placeholder="Email"
-          setText={onEnterEmail}
-          textInput={styles.textInput}
+          textInput={styles.textInputStyle}
+          setText={setEmail}
         />
-        <Text style={styles.validEmailText}>
-          {email.length > 0
-            ? validation(email)
-              ? ''
-              : ' Enter valid email'
-            : null}
-        </Text>
+        {email.length > 0 ? (
+          emailTest(email) ? (
+            <Text>{''}</Text>
+          ) : (
+            <Text style={styles.errorText}>Enter Valid Email</Text>
+          )
+        ) : null}
         <CustomTextInput
           placeholder="Password"
-          setText={onEnterPassword}
-          textInput={styles.textInput}
+          textInput={styles.textInputStyle}
+          setText={setPassword}
+          secureTextEntry={true}
         />
+        {password.length > 0 ? (
+          passwordTest(password) ? (
+            <Text>{''}</Text>
+          ) : (
+            <Text style={styles.errorText}>Enter Valid Passowrd</Text>
+          )
+        ) : null}
+        <CustomTextInput
+          placeholder="Confirm Password"
+          textInput={styles.textInputStyle}
+          setText={setConfirmPassowrd}
+        />
+        {password === confirmPassword ? (
+          <Text>{''}</Text>
+        ) : (
+          <Text style={styles.errorText}>Password not match</Text>
+        )}
+        <CustomButton
+          buttonStyle={styles.registerButtonStyle}
+          title={'Register'}
+          buttonText={styles.textButtonName}
+        />
+
+        <Text style={styles.descriptionSignUpText}>
+          {'By Registering you agree to '}
+          <Text style={styles.redDescriptionText}>
+            {'Terms & Conditions \n'}
+          </Text>
+          <Text style={styles.descriptionSignUpText}>{'and '}</Text>
+          <Text style={styles.redDescriptionText}>{'Privacy Policy'}</Text>
+        </Text>
       </View>
-      <Text style={styles.validPasswordText}>
-        {Password.length > 0
-          ? validation(Password)
-            ? ''
-            : 'Enter valid Passowrd'
-          : null}
-      </Text>
-      <CustomButton
-        buttonStyle={styles.RegisterButtonStyle}
-        buttonText={styles.RegisterButtonText}
-        title="SIGN UP"
-        onPress={() => {
-          handleSignUp(
-            email,
-            Password,
-            (sucessCallBack: any) => {
-              console.log(sucessCallBack);
-            },
-            (failureCallBack: any) => {
-              console.log(failureCallBack);
-            },
-          );
-        }}
-      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  RegisterButtonStyle: {
-    left: 16,
-    height: 52,
-    width: '90%',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'black',
-  },
-  RegisterButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  RegisterHeading: {
-    left: 16,
-    width: 148,
-    height: 40,
-    color: 'black',
-    position: 'absolute',
-    marginVertical: '30%',
-  },
-  validEmailText: {
-    left: '3.5%',
-    color: 'red',
-  },
-  validPasswordText: {
-    left: '4%',
-    color: 'red',
-  },
-
-  textInput: {
-    width: '90%',
-    height: 52,
-    left: 16,
-    borderWidth: 2,
-    borderColor: 'black',
-    // marginBottom: 20,
-    marginVertical: 12,
-    padding: 10,
-    // backgroundColor: 'red',
-  },
-  textInputView: {
-    marginTop: '20%',
-    // backgroundColor: 'red',
-  },
-});
