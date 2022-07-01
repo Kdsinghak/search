@@ -36,6 +36,7 @@ export default function Login() {
           textInput={[styles.textInputStyle, {marginTop: '8%'}]}
           setText={setPassword}
           secureTextEntry={true}
+          maxLength={20}
         />
         {password.length > 0 ? (
           passwordTest(password) ? (

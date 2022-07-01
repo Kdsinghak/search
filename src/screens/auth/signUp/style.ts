@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     backgroundColor: '#0d0f18',
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
     color: '#e1e3e6',
-    marginTop: normalize(40),
+    width: '95%',
+    marginRight: normalize(20),
+    marginTop: normalize(30),
   },
   TextinputView: {
     width: '90%',
