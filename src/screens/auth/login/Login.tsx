@@ -1,17 +1,47 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import styles from '../login/style';
 import React, {useState} from 'react';
 import {Images} from '../../../utils';
-import {CustomTextInput, CustomButton} from '../../../customComponents';
-import {passwordTest, emailTest} from '../../../utils/regex';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {handleSignin, googleSignIn} from './LoginUtils';
-import styles from '../login/style';
 import {useNavigation} from '@react-navigation/native';
+import {emailSignin, googleSignIn} from './LoginUtils';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {passwordTest, emailTest} from '../../../utils/regex';
+import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
+import {CustomTextInput, CustomButton} from '../../../customComponents';
+
 export default function Login() {
+  var isDisable = true;
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isDisable, setDisable] = useState(true);
-  const navigation = useNavigation();
+
+  const handleNavigation = () => {
+    navigation.navigate('SignUp');
+  };
+
+  const handleSignIn = (type: string) => {
+    switch (type) {
+      case 'google':
+        return googleSignIn(
+          (sucess: any) => {
+            Alert.alert('sign In Sucessfull');
+          },
+          (error: any) => {
+            console.log(error);
+          },
+        );
+      case 'Email SignIn':
+        return emailSignin(
+          email,
+          password,
+          (sucess: any) => {
+            Alert.alert('Login Sucess Full');
+          },
+          (error: any) => {
+            Alert.alert(error);
+          },
+        );
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -20,9 +50,9 @@ export default function Login() {
       </View>
       <View style={styles.TextinputView}>
         <CustomTextInput
+          setText={setEmail}
           placeholder="Email ID"
           textInput={styles.textInputStyle}
-          setText={setEmail}
         />
         {email.length > 0 ? (
           emailTest(email) ? (
@@ -32,11 +62,11 @@ export default function Login() {
           )
         ) : null}
         <CustomTextInput
+          maxLength={20}
           placeholder="Password"
-          textInput={[styles.textInputStyle, {marginTop: '8%'}]}
           setText={setPassword}
           secureTextEntry={true}
-          maxLength={20}
+          textInput={[styles.textInputStyle, {marginTop: '8%'}]}
         />
         {password.length > 0 ? (
           passwordTest(password) ? (
@@ -49,35 +79,14 @@ export default function Login() {
       <Text style={styles.forgotPasswordStyle}>Forgot Password?</Text>
 
       <CustomButton
-        buttonStyle={styles.loginButton}
         title="Login"
-        buttonText={styles.buttonText}
         isDisable={isDisable}
-        onPress={() =>
-          handleSignin(
-            email,
-            password,
-            (sucess: any) => {
-              console.log(sucess);
-            },
-            (error: any) => {
-              console.log(error);
-            },
-          )
-        }
+        buttonText={styles.buttonText}
+        buttonStyle={styles.loginButton}
+        onPress={() => handleSignIn('Email SignIn')}
       />
       <View style={styles.socialButtonView}>
-        <TouchableOpacity
-          onPress={() =>
-            googleSignIn(
-              (sucess: any) => {
-                console.log(sucess);
-              },
-              (error: any) => {
-                console.log(error);
-              },
-            )
-          }>
+        <TouchableOpacity onPress={() => handleSignIn('google')}>
           <Icon name="google" size={30} color={'#fc1655'} />
         </TouchableOpacity>
         <TouchableOpacity>
@@ -86,10 +95,7 @@ export default function Login() {
       </View>
       <Text style={styles.RegisterTextStyle}>
         Don't have an account?
-        <Text
-          style={styles.registerButtonStyle}
-          onPress={() => navigation.navigate('SignUp')}>
-          {' '}
+        <Text style={styles.registerButtonStyle} onPress={handleNavigation}>
           Register Now
         </Text>
       </Text>

@@ -6,7 +6,7 @@ GoogleSignin.configure({
     '276532965348-i0ou9rhe00h7bvu1jrejrp7sb96oam3a.apps.googleusercontent.com',
 });
 
-const handleSignin = (
+const emailSignin = (
   email: string,
   password: string,
   onSucess: Function,
@@ -18,7 +18,8 @@ const handleSignin = (
       onSucess(res);
     })
     .catch(err => {
-      onfailure(err);
+      onfailure(err.message);
+      console.log(err.message);
     });
 };
 
@@ -38,4 +39,4 @@ const googleSignIn = async (onSucess: Function, onfailure: Function) => {
   }
 };
 
-export {handleSignin, googleSignIn};
+export {emailSignin, googleSignIn};
