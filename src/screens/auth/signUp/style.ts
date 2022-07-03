@@ -2,46 +2,46 @@ import {StyleSheet} from 'react-native';
 import {normalize} from '../../../utils/dimensions';
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0d0f18',
     flex: 1,
+    backgroundColor: '#0d0f18',
   },
   textInputStyle: {
-    borderBottomColor: '#2c3039',
-    borderBottomWidth: 2,
-    backgroundColor: '#0d0f18',
     padding: 10,
-    color: '#e1e3e6',
     width: '95%',
-    marginRight: normalize(20),
+    color: '#e1e3e6',
+    borderBottomWidth: 2,
     marginTop: normalize(30),
+    backgroundColor: '#0d0f18',
+    marginRight: normalize(20),
+    borderBottomColor: '#2c3039',
   },
   TextinputView: {
     width: '90%',
     marginHorizontal: 20,
   },
   heading: {
+    fontSize: 22,
     color: 'white',
     marginTop: '15%',
-    marginHorizontal: '8%',
-    fontSize: 22,
     fontWeight: 'bold',
+    marginHorizontal: '8%',
   },
   backButton: {
-    marginTop: '17%',
     width: 20,
+    marginTop: '17%',
     marginHorizontal: '6%',
   },
   registerButtonStyle: {
     height: normalize(45),
+    marginTop: normalize(80),
     backgroundColor: '#fc1655',
     borderRadius: normalize(7),
-    marginTop: normalize(80),
   },
   textButtonName: {
     color: 'white',
-    fontSize: normalize(16),
     fontWeight: '600',
     textAlign: 'center',
+    fontSize: normalize(16),
     marginTop: normalize(11),
   },
   descriptionSignUpText: {
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     color: '#fc1655',
   },
   errorText: {
-    color: '#fc1655',
     paddingTop: 10,
+    color: '#fc1655',
     marginHorizontal: 10,
   },
 });

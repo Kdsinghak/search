@@ -1,12 +1,12 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import {CustomTextInput, CustomButton} from '../../../customComponents';
-import {normalize} from '../../../utils/dimensions';
-import {passwordTest, emailTest} from '../../../utils/regex';
-import {useNavigation} from '@react-navigation/native';
 import styles from './style';
+import React, {useState} from 'react';
 import {handleSignUp} from './SignUpUtils';
+import {useNavigation} from '@react-navigation/native';
+import {View, Text, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import {passwordTest, emailTest} from '../../../utils/regex';
+import {CustomTextInput, CustomButton} from '../../../customComponents';
+
 export default function SignUp() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');

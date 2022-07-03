@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#0d0f18',
   },
   splashimg: {
@@ -13,27 +13,27 @@ const styles = StyleSheet.create({
   },
 
   loginButton: {
-    height: 52,
-    width: '40%',
     left: 16,
-    position: 'absolute',
+    height: 52,
     top: '85%',
-    borderColor: 'black',
+    width: '40%',
     borderWidth: 2,
     borderRadius: 8,
+    position: 'absolute',
+    borderColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
   registerButton: {
-    height: 52,
-    width: '40%',
-    left: '55%',
-    position: 'absolute',
     top: '85%',
-    backgroundColor: '#000000',
+    height: 52,
+    left: '55%',
+    width: '40%',
     borderRadius: 8,
+    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#000000',
   },
   loginText: {
     color: 'black',

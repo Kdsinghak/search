@@ -1,9 +1,8 @@
 import styles from './style';
-import {Image, View} from 'react-native';
 import React, {useEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import CustomButton from '../../customComponents/CustomButton';
+import {Image, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 
 export default function SplashScreen() {
   const navigation: any = useNavigation();

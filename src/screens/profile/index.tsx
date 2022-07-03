@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {Text, View, Image, ActivityIndicator} from 'react-native';
 import styles from './style';
+import React, {useState} from 'react';
 import CustomHeader from '../../customComponents/CustomHeader';
+import {Text, View, Image, ActivityIndicator} from 'react-native';
 
 export default function Profile({route}: any) {
   console.log(route.params);

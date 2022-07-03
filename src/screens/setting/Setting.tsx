@@ -1,18 +1,21 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {CustomButton, CustomButtom2} from '../../customComponents';
-import {handleSignOut} from './Action';
+import styles from './style';
+import {handleSignOut} from './SettingUtils';
+import DeviceInfo from 'react-native-device-info';
 import {useNavigation} from '@react-navigation/native';
+import {View, Text, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import {CustomButton, CustomButtom2} from '../../customComponents';
 
 export default function Setting() {
   const navigation = useNavigation();
+  const version = DeviceInfo.getVersion();
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.headerSetting}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name={'reply'} size={20} />
+          <Icon name={'arrow-left'} size={20} color={'white'} />
         </TouchableOpacity>
         <Text style={styles.settingHeading}>Settings</Text>
       </View>
@@ -40,54 +43,9 @@ export default function Setting() {
         }}
       />
       <View style={styles.appInfoView}>
-        <Text>Search App - 3.33.3.0</Text>
-        <Text>Made with love in India</Text>
+        <Text style={styles.appInfoText}>Search App - {version}</Text>
+        <Text style={styles.appInfoText}>Made with love in India</Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  headerSetting: {
-    flexDirection: 'row',
-    marginTop: '15%',
-    justifyContent: 'flex-start',
-    paddingHorizontal: '6%',
-  },
-  LoginButon: {
-    left: 16,
-    height: 52,
-    width: '90%',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'black',
-    marginVertical: '15%',
-  },
-  settingHeading: {
-    marginHorizontal: '10%',
-    fontSize: 20,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-
-  Button: {
-    backgroundColor: '#737373',
-    flexDirection: 'row',
-    height: 50,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: '6%',
-    marginVertical: 2,
-  },
-  ButtonView: {
-    marginTop: '10%',
-  },
-  appInfoView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
