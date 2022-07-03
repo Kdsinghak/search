@@ -3,7 +3,7 @@ import styles from './style';
 import {handleSignOut} from './SettingUtils';
 import DeviceInfo from 'react-native-device-info';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import {CustomButton, CustomButtom2} from '../../customComponents';
 
@@ -11,10 +11,24 @@ export default function Setting() {
   const navigation = useNavigation();
   const version = DeviceInfo.getVersion();
 
+  const signOut = () => {
+    handleSignOut(
+      (sucess: any) => {
+        Alert.alert('Logout Sucessfull');
+      },
+      (error: any) => {
+        Alert.alert('something Wrong');
+      },
+    );
+  };
+  const handleNavigation = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerSetting}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={handleNavigation}>
           <Icon name={'arrow-left'} size={20} color={'white'} />
         </TouchableOpacity>
         <Text style={styles.settingHeading}>Settings</Text>
@@ -31,16 +45,7 @@ export default function Setting() {
         title="LOGOUT"
         buttonStyle={styles.LoginButon}
         buttonText={styles.buttonText}
-        onPress={() => {
-          handleSignOut(
-            (sucess: any) => {
-              console.log('ebfhewbwe', sucess);
-            },
-            (error: any) => {
-              console.log('c hebghvbwehv', error);
-            },
-          );
-        }}
+        onPress={signOut}
       />
       <View style={styles.appInfoView}>
         <Text style={styles.appInfoText}>Search App - {version}</Text>

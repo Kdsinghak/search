@@ -2,22 +2,38 @@ import styles from './style';
 import React, {useState} from 'react';
 import {handleSignUp} from './SignUpUtils';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import {passwordTest, emailTest} from '../../../utils/regex';
 import {CustomTextInput, CustomButton} from '../../../customComponents';
 
 export default function SignUp() {
   const navigation = useNavigation();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [confirmPassword, setConfirmPassowrd] = useState('');
+
+  const handleNavigation = () => {
+    navigation.goBack();
+  };
+
+  const signUp = () => {
+    handleSignUp(
+      email,
+      password,
+      (sucess: any) => {
+        Alert.alert('Register Sucessfull');
+      },
+      (error: string) => {
+        Alert.alert(error);
+      },
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.backButton} onPress={handleNavigation}>
         <Icon name="arrow-left" size={20} color={'white'} />
       </TouchableOpacity>
 
@@ -67,18 +83,7 @@ export default function SignUp() {
           buttonStyle={styles.registerButtonStyle}
           title={'Register'}
           buttonText={styles.textButtonName}
-          onPress={() =>
-            handleSignUp(
-              email,
-              password,
-              (sucess: any) => {
-                console.log(sucess);
-              },
-              (error: any) => {
-                console.log(error);
-              },
-            )
-          }
+          onPress={signUp}
         />
 
         <Text style={styles.descriptionSignUpText}>

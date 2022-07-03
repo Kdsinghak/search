@@ -24,7 +24,6 @@ import {reducer, initialState} from './reducer';
 import callingAPI from '../../action/callingAPI';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import auth from '@react-native-firebase/auth';
 
 export default function Home() {
   const listRef: any = useRef(null);
@@ -71,7 +70,6 @@ export default function Home() {
   }, [state.search]);
 
   const onendPage = () => {
-    console.log('onendPage', state.offset);
     Keyboard.dismiss();
     dispatch({type: 'loding', payload: {loding: true}});
     callingAPI.getApi(
@@ -160,7 +158,6 @@ export default function Home() {
       <TouchableOpacity
         style={styles.backToTop}
         onPress={() => {
-          console.log('kjhgfdfghjk', listRef.current);
           listRef.current.scrollToOffset({offset: 0});
         }}>
         <Icon name={'arrowup'} size={30} />

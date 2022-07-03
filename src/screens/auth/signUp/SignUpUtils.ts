@@ -12,7 +12,7 @@ const handleSignUp = (
       onSucess(sucess);
     })
     .catch(err => {
-      onFailure(err);
+      onFailure(err.message);
     });
 };
 

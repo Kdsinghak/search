@@ -24,24 +24,6 @@ export default function SplashScreen() {
         source={require('../../assests/images/logo.png')}
         style={styles.splashimg}
       />
-
-      {/* <CustomButton
-        buttonStyle={styles.loginButton}
-        buttonText={styles.loginText}
-        title="LOG IN"
-        onPress={() => {
-          navigation.navigate('Login');
-        }}
-      />
-
-      <CustomButton
-        buttonStyle={styles.registerButton}
-        buttonText={styles.registerText}
-        title="REGISTER"
-        onPress={() => {
-          navigation.navigate('SignUp');
-        }}
-      /> */}
     </View>
   );
 }

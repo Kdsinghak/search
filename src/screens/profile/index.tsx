@@ -4,11 +4,11 @@ import CustomHeader from '../../customComponents/CustomHeader';
 import {Text, View, Image, ActivityIndicator} from 'react-native';
 
 export default function Profile({route}: any) {
-  console.log(route.params);
-  const {color} = route.params;
+  const {color} = route?.params;
   const [isLoading, setLoader] = useState(false);
-  const {display_name, username, description} = route.params.item.user;
-  const {url}: {url: string | undefined} = route.params.item.images.original;
+  const {display_name, username, description} = route?.params?.item?.user;
+  const {url}: {url: string | undefined} =
+    route?.params?.item?.images?.original;
 
   return (
     <View style={styles.container}>
@@ -38,7 +38,6 @@ export default function Profile({route}: any) {
         <View style={styles.displayNameView}>
           <Text style={styles.displayNameText}>{display_name}</Text>
           <Text style={styles.username}>@{username}</Text>
-          {/* <Text style={styles.heading}>{title}</Text> */}
 
           <View style={styles.descriptionView}>
             <Text style={styles.descriptionText}>Description</Text>
