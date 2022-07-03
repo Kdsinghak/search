@@ -7,7 +7,7 @@ const initialState = {
   Networkerr: false,
 };
 
-const reducer = (state = initialState, action: {type: any, payload: any}) => {
+const reducer = (state = initialState, action: {type: any; payload: any}) => {
   const {type, payload} = action;
   switch (type) {
     case 'data':
@@ -21,5 +21,4 @@ const reducer = (state = initialState, action: {type: any, payload: any}) => {
   }
 };
 
-
-export {reducer , initialState}
+export {reducer, initialState};

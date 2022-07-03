@@ -22,7 +22,7 @@ export default function SplashScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assests/images/Rectangle.png')}
+        source={require('../../assests/images/logo.png')}
         style={styles.splashimg}
       />
 
