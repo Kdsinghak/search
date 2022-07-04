@@ -1,6 +1,5 @@
 import colors from './colors';
-import screenNames from './screenNames';
-import regex from './regex';
 import Images from './images';
+import screenNames from './screenNames';
 
-export {colors, screenNames, regex, Images};
+export {colors, screenNames, Images};

@@ -2,42 +2,42 @@ import {StyleSheet} from 'react-native';
 import {normalize} from '../../../utils/dimensions';
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0d0f18',
     flex: 1,
+    backgroundColor: '#0d0f18',
   },
   imageView: {
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: '5%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   logoStyle: {
-    height: '40%',
     width: '40%',
+    height: '40%',
   },
   textInputStyle: {
-    borderBottomColor: '#2c3039',
-    borderBottomWidth: 2,
-    backgroundColor: '#0d0f18',
-    padding: 10,
-    color: '#e1e3e6',
     width: '95%',
+    color: '#e1e3e6',
+    padding: normalize(10),
+    backgroundColor: '#0d0f18',
     marginRight: normalize(20),
+    borderBottomColor: '#2c3039',
+    borderBottomWidth: normalize(2),
   },
 
   forgotPasswordStyle: {
     color: '#bc1647',
     textAlign: 'right',
-    paddingHorizontal: 20,
-    marginVertical: 20,
+    marginVertical: normalize(20),
+    paddingHorizontal: normalize(20),
   },
   loginButton: {
-    backgroundColor: '#1e2029',
     height: '6%',
-    justifyContent: 'center',
-    alignItems: 'center',
     width: '80%',
     alignSelf: 'center',
-    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fc1655',
+    borderRadius: normalize(6),
   },
   buttonText: {
     color: 'white',
@@ -51,18 +51,18 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: '#fc1655',
-    paddingTop: 10,
-    marginHorizontal: 10,
+    paddingTop: normalize(10),
+    marginHorizontal: normalize(10),
   },
   TextinputView: {
     width: '90%',
-    marginHorizontal: 20,
+    marginHorizontal: normalize(20),
   },
   socialButtonView: {
     flexDirection: 'row',
     marginVertical: '10%',
-    justifyContent: 'space-around',
     paddingHorizontal: '30%',
+    justifyContent: 'space-around',
   },
 });
 

@@ -18,7 +18,6 @@ export default function CustomTextInput(props: any) {
         placeholder={props.placeholder}
         onChangeText={text => {
           props.setText(text);
-          console.log(' jhbdfjhefbwe', text);
         }}
         secureTextEntry={secureTextEntry && visible}
         maxLength={maxLength}
@@ -27,7 +26,7 @@ export default function CustomTextInput(props: any) {
         {secureTextEntry ? (
           <Icon
             name={!visible ? 'eye' : 'eye-off'}
-            size={30}
+            size={25}
             color={'white'}
             style={styles.eyeIcon}
           />
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   eyeIcon: {
-    top: normalize(30),
+    top: normalize(35),
     right: normalize(50),
   },
 });

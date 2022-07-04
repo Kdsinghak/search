@@ -10,7 +10,7 @@ import {CustomTextInput, CustomButton} from '../../../customComponents';
 
 export default function Login() {
   var isDisable = true;
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,7 +34,7 @@ export default function Login() {
           email,
           password,
           (sucess: any) => {
-            Alert.alert('Login Sucess Full');
+            console.log(sucess);
           },
           (error: any) => {
             Alert.alert(error);

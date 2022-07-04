@@ -2,9 +2,9 @@ import styles from './style';
 import React, {useState} from 'react';
 import {handleSignUp} from './SignUpUtils';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import {passwordTest, emailTest} from '../../../utils/regex';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {CustomTextInput, CustomButton} from '../../../customComponents';
 
 export default function SignUp() {
