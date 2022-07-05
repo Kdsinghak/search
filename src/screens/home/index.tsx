@@ -74,7 +74,7 @@ function Home({route}: any) {
         payload: {recentSearch: onsucess},
       });
     });
-  }, [state]);
+  }, [state.recentSearch]);
 
   useEffect(() => {
     processChange(state.search);
