@@ -1,47 +1,25 @@
-import { useReducer, useCallback } from "react";
-import { reducer, initialState } from "./reducer";
-import callingAPI from '../../action/callingAPI';
+import firestore from '@react-native-firebase/firestore';
 
-function Action(){
+var SearchArray: string[] = [];
+export const handleOnblur = (
+  displayName: string,
+  uid: string,
+  email: string,
+  search: string,
+) => {
+  console.log(search);
+  SearchArray.unshift(search);
+  firestore().collection('Users').doc(uid).set({
+    name: displayName,
+    email: email,
+    search: SearchArray,
+  });
+};
 
-    const [state, dispatch] = useReducer(reducer, initialState);
-    
-    function debounce(fun:Function, timeout:number) {
-        
-        let timer: string | number | NodeJS.Timeout | undefined;
-        return (args:string) => {
-          clearTimeout(timer);
-    
-          timer = setTimeout(() => {
-            dispatch({type: 'data', payload: {data: []}});
-            fun(args);
-    
-          }, timeout);
-        };
-      }
-    
-   const processChange = useCallback(
-       
-        debounce((search:string) =>{
-          callingAPI.getApi(
-            search,
-            state.offset,
-    
-            (Details: string | []) => {
-              if (Details.length === 0) {
-                dispatch({type: 'loding', payload: {loding: false}});
-              } else {
-                console.log(state.data);
-                dispatch({type: 'data', payload: {data: [...Details]}});
-              }
-            },
-            (error:string) => {
-              console.log(error);
-            },
-          )
-    } , 500
-        ),
-        [],
-      );   
-  }
-
+export const getDatafromfireBase = (uid: string, sucessCallBack: Function) => {
+  firestore()
+    .collection('Users')
+    .doc(uid)
+    .get()
+    .then(res => sucessCallBack(res._data.search));
+};

@@ -10,7 +10,7 @@ export default function SplashScreen() {
   useEffect(() => {
     const suscriber = auth().onAuthStateChanged(user => {
       if (user) {
-        setTimeout(() => navigation.navigate('Home'), 1000);
+        setTimeout(() => navigation.navigate('Home', {user}), 1000);
       } else {
         setTimeout(() => navigation.navigate('Login'), 1000);
       }

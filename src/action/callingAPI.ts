@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const getApi = (search:string, page:number, sucessCallBack:Function, failureCallBack:Function) => {
+const getApi = (
+  search: string,
+  page: number,
+  sucessCallBack: Function,
+  failureCallBack: Function,
+) => {
   console.log('api call ');
   axios
     .get(

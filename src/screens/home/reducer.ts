@@ -5,6 +5,7 @@ const initialState = {
   loding: false,
   search: 'heart',
   Networkerr: false,
+  recentSearch: [],
 };
 
 const reducer = (state = initialState, action: {type: any; payload: any}) => {
@@ -17,6 +18,8 @@ const reducer = (state = initialState, action: {type: any; payload: any}) => {
     case 'loding':
       return {...state, ...payload};
     case 'search':
+      return {...state, ...payload};
+    case 'RecentSearch':
       return {...state, ...payload};
   }
 };

@@ -25,12 +25,15 @@ import callingAPI from '../../action/callingAPI';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-export default function Home() {
+import {handleOnblur, getDatafromfireBase} from './action';
+
+export default function Home({route}: any) {
+  const [{displayName, email, uid}] = route.params.user._user.providerData;
   const listRef: any = useRef(null);
   const navigation: any = useNavigation();
   const [Networkerr, setNetworkErr] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  console.log(state);
   const debounce = (fun: Function, timeout: number) => {
     let timer: string | number | NodeJS.Timeout | undefined;
     return (args: string) => {
@@ -64,6 +67,12 @@ export default function Home() {
     }, 500),
     [],
   );
+
+  useEffect(() => {
+    getDatafromfireBase(uid, onsucess => {
+      dispatch({type: 'RecentSearch', payload: {recentSearch: [...onsucess]}});
+    });
+  }, []);
 
   useEffect(() => {
     processChange(state.search);
@@ -115,12 +124,7 @@ export default function Home() {
     );
   };
 
-  return Networkerr ? (
-    <Image
-      source={require('../../assests/images/Network_Error.gif')}
-      style={styles.networkimg}
-    />
-  ) : (
+  return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.heading}>Search</Text>
@@ -140,6 +144,7 @@ export default function Home() {
         onChangeText={value => {
           dispatch({type: 'search', payload: {search: value}});
         }}
+        onBlur={() => handleOnblur(displayName, uid, email, state.search)}
       />
 
       {state.data.length > 0 ? (
