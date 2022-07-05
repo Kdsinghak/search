@@ -24,16 +24,16 @@ import {reducer, initialState} from './reducer';
 import callingAPI from '../../action/callingAPI';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-
+import {RecentSearch} from '../../customComponents';
 import {handleOnblur, getDatafromfireBase} from './action';
 
-export default function Home({route}: any) {
+function Home({route}: any) {
   const [{displayName, email, uid}] = route.params.user._user.providerData;
   const listRef: any = useRef(null);
   const navigation: any = useNavigation();
   const [Networkerr, setNetworkErr] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state);
+
   const debounce = (fun: Function, timeout: number) => {
     let timer: string | number | NodeJS.Timeout | undefined;
     return (args: string) => {
@@ -56,7 +56,6 @@ export default function Home({route}: any) {
           if (Details.length === 0) {
             dispatch({type: 'loding', payload: {loding: false}});
           } else {
-            console.log(state.data);
             dispatch({type: 'data', payload: {data: [...Details]}});
           }
         },
@@ -69,10 +68,13 @@ export default function Home({route}: any) {
   );
 
   useEffect(() => {
-    getDatafromfireBase(uid, onsucess => {
-      dispatch({type: 'RecentSearch', payload: {recentSearch: [...onsucess]}});
+    getDatafromfireBase(uid, (onsucess: any) => {
+      dispatch({
+        type: 'RecentSearch',
+        payload: {recentSearch: onsucess},
+      });
     });
-  }, []);
+  }, [state]);
 
   useEffect(() => {
     processChange(state.search);
@@ -147,6 +149,8 @@ export default function Home({route}: any) {
         onBlur={() => handleOnblur(displayName, uid, email, state.search)}
       />
 
+      <RecentSearch data={state.recentSearch} />
+
       {state.data.length > 0 ? (
         <FlatList
           ref={listRef}
@@ -173,3 +177,5 @@ export default function Home({route}: any) {
     </SafeAreaView>
   );
 }
+
+export default React.memo(Home);

@@ -6,7 +6,9 @@ const getApi = (
   sucessCallBack: Function,
   failureCallBack: Function,
 ) => {
-  console.log('api call ');
+  if (search === '' || search === 'undefined') {
+    search = 'heart';
+  }
   axios
     .get(
       `https://api.giphy.com/v1/gifs/search?api_key=q45RZgEO0PITzMQtXwmhHDpM45VeJAJs&limit=10&offset=${page}&q=${search}`,

@@ -21,6 +21,8 @@ const reducer = (state = initialState, action: {type: any; payload: any}) => {
       return {...state, ...payload};
     case 'RecentSearch':
       return {...state, ...payload};
+    default:
+      return {...state};
   }
 };
 
