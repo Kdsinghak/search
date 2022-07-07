@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 const {height, width} = Dimensions.get('window');
 export default function CustomHeader() {
   const navigation = useNavigation();
+  console.log('hgfdxzsADSFhzgdfhdgfh');
 
   return (
     <View style={styles.container}>
