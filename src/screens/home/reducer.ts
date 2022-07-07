@@ -22,7 +22,7 @@ const reducer = (state = initialState, action: {type: any; payload: any}) => {
     case 'RecentSearch':
       return {...state, ...payload};
     default:
-      return {...state};
+      return state;
   }
 };
 

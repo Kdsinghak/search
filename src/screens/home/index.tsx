@@ -1,20 +1,15 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useReducer,
-  useCallback,
-} from 'react';
+import React, {useRef, useEffect, useReducer, useCallback} from 'react';
 import {
   View,
   Text,
   Image,
+  Keyboard,
   FlatList,
   TextInput,
-  Keyboard,
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 
 import styles from './style';
@@ -22,16 +17,15 @@ import {propsType} from '../../modal';
 import colors from '../../utils/colors';
 import {reducer, initialState} from './reducer';
 import callingAPI from '../../action/callingAPI';
-import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {RecentSearch} from '../../customComponents';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 import {handleOnblur, getDatafromfireBase} from './action';
 
 function Home({route}: any) {
   const [{displayName, email, uid}] = route.params.user._user.providerData;
   const listRef: any = useRef(null);
   const navigation: any = useNavigation();
-  const [Networkerr, setNetworkErr] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const debounce = (fun: Function, timeout: number) => {
@@ -60,7 +54,7 @@ function Home({route}: any) {
           }
         },
         (error: string) => {
-          console.log(error);
+          Alert.alert(error);
         },
       );
     }, 500),
@@ -68,16 +62,13 @@ function Home({route}: any) {
   );
 
   useEffect(() => {
-    getDatafromfireBase(uid, (onsucess: any) => {
+    processChange(state.search);
+    getDatafromfireBase(uid, (onSucess: any) => {
       dispatch({
         type: 'RecentSearch',
-        payload: {recentSearch: onsucess},
+        payload: {recentSearch: [...onSucess]},
       });
     });
-  }, [state.recentSearch]);
-
-  useEffect(() => {
-    processChange(state.search);
   }, [state.search]);
 
   const onendPage = () => {
@@ -98,13 +89,14 @@ function Home({route}: any) {
             });
       },
       (error: string) => {
-        console.log(error);
+        Alert.alert(error);
       },
     );
   };
 
   const renderItem = ({item, index}: {item: propsType; index: number}) => {
     let color = colors[index % colors.length];
+    console.log('call call');
     return (
       <TouchableOpacity
         style={[styles.Card, {backgroundColor: color}]}
@@ -146,10 +138,12 @@ function Home({route}: any) {
         onChangeText={value => {
           dispatch({type: 'search', payload: {search: value}});
         }}
-        onBlur={() => handleOnblur(displayName, uid, email, state.search)}
+        onBlur={() => {
+          handleOnblur(displayName, uid, email, state.search);
+        }}
       />
 
-      <RecentSearch data={state.recentSearch} />
+      <RecentSearch data={state.recentSearch} dispatch={dispatch} />
 
       {state.data.length > 0 ? (
         <FlatList

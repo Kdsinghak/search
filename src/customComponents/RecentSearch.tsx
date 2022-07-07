@@ -1,15 +1,36 @@
-import {View, Text, FlatList, StyleSheet} from 'react-native';
-import React, {useCallback} from 'react';
+import {View, Text, FlatList, StyleSheet, Alert} from 'react-native';
+import React, {useCallback, useReducer} from 'react';
 import {normalize} from '../utils/dimensions';
+import callingAPI from '../action/callingAPI';
 
 function RecentSearch(props: any) {
-  const {data} = props;
-  console.log('reacent');
+  const {data, dispatch} = props;
+  let length = data.length;
+  data.splice(5, length);
+
+  const recentSearchApiCalling = (item: any) => {
+    callingAPI.getApi(
+      item,
+      0,
+      (sucess: any) => {
+        dispatch({type: 'data', payload: {data: [...sucess]}});
+        dispatch({type: 'RecentSearch', payload: {search: item}});
+      },
+      (error: any) => {
+        Alert.alert(error.message);
+      },
+    );
+  };
+
   const _onRenderItem = useCallback(
     ({item}: any) => {
       return (
         <View style={styles.card}>
-          <Text style={styles.text}>{item}</Text>
+          <Text
+            onPress={() => recentSearchApiCalling(item)}
+            style={styles.text}>
+            {item}
+          </Text>
         </View>
       );
     },
@@ -19,7 +40,12 @@ function RecentSearch(props: any) {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>RecentSearch</Text>
-      <FlatList data={data} renderItem={_onRenderItem} horizontal />
+      <FlatList
+        data={data}
+        renderItem={_onRenderItem}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      />
     </View>
   );
 }
