@@ -6,7 +6,7 @@ import {Text, View, Image, ActivityIndicator} from 'react-native';
 export default function Profile({route}: any) {
   const {color} = route?.params;
   const [isLoading, setLoader] = useState(false);
-  const {display_name, username, description} = route?.params?.item?.user;
+  const {display_name, username, description} = route?.params?.item?.user ?? '';
   const {url}: {url: string | undefined} =
     route?.params?.item?.images?.original;
 

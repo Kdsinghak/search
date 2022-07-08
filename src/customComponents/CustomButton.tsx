@@ -3,7 +3,6 @@ import {Text, TouchableOpacity} from 'react-native';
 
 export default function CustomButton(props: any) {
   const {buttonStyle, title, buttonText, onPress, idDisable} = props;
-  console.log('dfhgj');
 
   return (
     <TouchableOpacity

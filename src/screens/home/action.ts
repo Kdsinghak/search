@@ -8,7 +8,6 @@ export const handleOnblur = (
   email: string,
   search: string,
 ) => {
-  console.log('search is', search);
   let index = SearchArray.findIndex(item => item === search);
 
   if (index != -1) {

@@ -5,14 +5,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   innerView: {
-    width: '80%',
+    width: '85%',
     height: '60%',
     marginTop: 20,
     marginLeft: 40,
     borderWidth: 1,
     borderRadius: 10,
     overflow: 'hidden',
-    paddingHorizontal: 10,
     justifyContent: 'center',
   },
   innerView2: {
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
   profileIcon: {
     height: '100%',
     width: '100%',
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
   },
   heading: {
     fontSize: 20,

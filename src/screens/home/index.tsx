@@ -1,12 +1,18 @@
-import React, {useRef, useEffect, useReducer, useCallback} from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useReducer,
+  useCallback,
+  useState,
+} from 'react';
 import {
   View,
   Text,
+  Alert,
   TextInput,
   SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
 } from 'react-native';
 
 import styles from './style';
@@ -20,7 +26,7 @@ import SearchResultFlatlist from '../../customComponents/SearchResultFlatlist';
 
 function Home({route}: any) {
   const [{displayName, email, uid}] = route.params.user._user.providerData;
-  const listRef: any = useRef(null);
+  const flatListRef = useRef(null);
   const navigation: any = useNavigation();
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -30,7 +36,6 @@ function Home({route}: any) {
       clearTimeout(timer);
       timer = setTimeout(() => {
         dispatch({type: 'data', payload: {data: []}});
-
         fun(args);
       }, timeout);
     };
@@ -81,7 +86,7 @@ function Home({route}: any) {
         style={styles.txtinput}
         onFocus={() => {
           if (state.data.length > 0) {
-            listRef.current.scrollToOffset({offset: 0});
+            flatListRef.current.scrollToOffset({offset: 0});
           }
         }}
         onChangeText={value => {
@@ -95,7 +100,11 @@ function Home({route}: any) {
       <RecentSearch data={state.recentSearch} dispatch={dispatch} />
 
       {state.data.length > 0 ? (
-        <SearchResultFlatlist data={state} dispatch={dispatch} />
+        <SearchResultFlatlist
+          data={state}
+          dispatch={dispatch}
+          ref={flatListRef}
+        />
       ) : (
         <ActivityIndicator size="large" animating={true} color="red" />
       )}
@@ -103,7 +112,7 @@ function Home({route}: any) {
       <TouchableOpacity
         style={styles.backToTop}
         onPress={() => {
-          listRef.current.scrollToOffset({offset: 0});
+          flatListRef.current.scrollToOffset({offset: 0});
         }}>
         <Icon name={'arrowup'} size={30} />
       </TouchableOpacity>
