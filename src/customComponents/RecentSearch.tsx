@@ -2,18 +2,22 @@ import {View, Text, FlatList, StyleSheet, Alert} from 'react-native';
 import React, {useCallback, useReducer} from 'react';
 import {normalize} from '../utils/dimensions';
 import callingAPI from '../action/callingAPI';
+import {handleOnblur} from '../screens/home/action';
 
 function RecentSearch(props: any) {
   const {data, dispatch} = props;
   let length = data.length;
   data.splice(5, length);
+  const [{displayName, email, uid}] = props.userDetails;
 
   const recentSearchApiCalling = (item: any) => {
+    handleOnblur(displayName, uid, email, item, data);
     callingAPI.getApi(
       item,
       0,
       (sucess: any) => {
         dispatch({type: 'data', payload: {data: [...sucess]}});
+
         dispatch({type: 'RecentSearch', payload: {search: item}});
       },
       (error: any) => {

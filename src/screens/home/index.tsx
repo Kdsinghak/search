@@ -93,11 +93,21 @@ function Home({route}: any) {
           dispatch({type: 'search', payload: {search: value}});
         }}
         onBlur={() => {
-          handleOnblur(displayName, uid, email, state.search);
+          handleOnblur(
+            displayName,
+            uid,
+            email,
+            state.search,
+            state.recentSearch,
+          );
         }}
       />
 
-      <RecentSearch data={state.recentSearch} dispatch={dispatch} />
+      <RecentSearch
+        data={state.recentSearch}
+        dispatch={dispatch}
+        userDetails={route.params.user._user.providerData}
+      />
 
       {state.data.length > 0 ? (
         <SearchResultFlatlist
