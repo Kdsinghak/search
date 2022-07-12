@@ -10,6 +10,14 @@ export default function Profile({route}: any) {
   const {url}: {url: string | undefined} =
     route?.params?.item?.images?.original;
 
+  const _onLoadStart = () => {
+    setLoader(true);
+  };
+
+  const _onLoadEnd = () => {
+    setLoader(false);
+  };
+
   return (
     <View style={styles.container}>
       <CustomHeader />
@@ -17,12 +25,8 @@ export default function Profile({route}: any) {
       <View style={styles.innerView2}>
         <View style={[styles.innerView, {backgroundColor: color}]}>
           <Image
-            onLoadStart={() => {
-              setLoader(true);
-            }}
-            onLoadEnd={() => {
-              setLoader(false);
-            }}
+            onLoadStart={_onLoadStart}
+            onLoadEnd={_onLoadEnd}
             source={{uri: url}}
             style={styles.profileIcon}
           />

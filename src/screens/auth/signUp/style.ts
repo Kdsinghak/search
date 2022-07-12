@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
     color: '#fc1655',
   },
   errorText: {
-    paddingTop: 10,
+    paddingTop: normalize(10),
     color: '#fc1655',
-    marginHorizontal: 10,
+    marginHorizontal: normalize(10),
   },
 });
 export default styles;

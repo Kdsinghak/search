@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useReducer,
-  useCallback,
-  useState,
-} from 'react';
+import React, {useRef, useEffect, useReducer, useCallback} from 'react';
 import {
   View,
   Text,
@@ -21,7 +15,7 @@ import callingAPI from '../../action/callingAPI';
 import {RecentSearch} from '../../customComponents';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
-import {handleOnblur, getDatafromfireBase} from './action';
+import {saveDataOnFirebase, getDatafromfireBase} from './action';
 import SearchResultFlatlist from '../../customComponents/SearchResultFlatlist';
 
 function Home({route}: any) {
@@ -32,6 +26,7 @@ function Home({route}: any) {
 
   const debounce = (fun: Function, timeout: number) => {
     let timer: string | number | NodeJS.Timeout | undefined;
+
     return (args: string) => {
       clearTimeout(timer);
       timer = setTimeout(() => {
@@ -48,6 +43,7 @@ function Home({route}: any) {
         state.offset,
 
         (Details: string | []) => {
+          saveDataOnFirebase(uid, email, search, state.recentSearch);
           if (Details.length === 0) {
             dispatch({type: 'loding', payload: {loding: false}});
           } else {
@@ -58,18 +54,21 @@ function Home({route}: any) {
           Alert.alert(error);
         },
       );
-    }, 500),
+    }, 1000),
     [],
   );
 
   useEffect(() => {
-    processChange(state.search);
     getDatafromfireBase(uid, (onSucess: any) => {
       dispatch({
         type: 'RecentSearch',
-        payload: {recentSearch: [...onSucess]},
+        payload: {recentSearch: onSucess},
       });
     });
+  }, [state.recentSearch]);
+
+  useEffect(() => {
+    processChange(state.search);
   }, [state.search]);
 
   return (
@@ -91,15 +90,6 @@ function Home({route}: any) {
         }}
         onChangeText={value => {
           dispatch({type: 'search', payload: {search: value}});
-        }}
-        onBlur={() => {
-          handleOnblur(
-            displayName,
-            uid,
-            email,
-            state.search,
-            state.recentSearch,
-          );
         }}
       />
 

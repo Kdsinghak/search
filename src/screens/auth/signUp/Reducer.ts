@@ -18,7 +18,7 @@ const reducer = (
       return {...state, ...payload};
 
     default:
-      break;
+      return state;
   }
 };
 

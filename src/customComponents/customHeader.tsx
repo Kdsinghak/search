@@ -11,15 +11,14 @@ import {useNavigation} from '@react-navigation/native';
 const {height, width} = Dimensions.get('window');
 export default function CustomHeader() {
   const navigation = useNavigation();
-  console.log('hgfdxzsADSFhzgdfhdgfh');
+
+  const handleNavigation = () => {
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.BackArrow}
-        onPress={() => {
-          navigation.goBack();
-        }}>
+      <TouchableOpacity style={styles.BackArrow} onPress={handleNavigation}>
         <Icon name="arrowleft" size={40} />
       </TouchableOpacity>
       <Text style={styles.headerText}>Detail</Text>

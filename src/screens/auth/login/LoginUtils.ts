@@ -19,7 +19,7 @@ const emailSignin = (
     })
     .catch(err => {
       onfailure(err.message);
-      console.log(err.message);
+      // console.log(err.message);
     });
 };
 

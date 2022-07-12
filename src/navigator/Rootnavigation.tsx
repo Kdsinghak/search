@@ -1,11 +1,11 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import SplashScreen from '../screens/SplashScreen';
 import Home from '../screens/home';
 import Profile from '../screens/profile';
 import {Login, SignUp} from '../screens/auth';
 import Setting from '../screens/setting/Setting';
+import SplashScreen from '../screens/SplashScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 

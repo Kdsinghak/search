@@ -3,12 +3,13 @@ import styles from './style';
 import {handleSignOut} from './SettingUtils';
 import DeviceInfo from 'react-native-device-info';
 import {useNavigation} from '@react-navigation/native';
-import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {CustomButton, CustomButtom2} from '../../customComponents';
 
 export default function Setting() {
   const navigation = useNavigation();
+
   const version = DeviceInfo.getVersion();
 
   const signOut = () => {

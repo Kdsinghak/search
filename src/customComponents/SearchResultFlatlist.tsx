@@ -16,7 +16,6 @@ import callingAPI from '../action/callingAPI';
 import {useNavigation} from '@react-navigation/native';
 
 const SearchResultFlatlist = forwardRef((props: any, ref) => {
-  console.log(props);
   const {dispatch} = props;
   const navigation: any = useNavigation();
   const {data, offset, loding, search} = props.data;
@@ -67,6 +66,7 @@ const SearchResultFlatlist = forwardRef((props: any, ref) => {
       </TouchableOpacity>
     );
   };
+
   return (
     <View style={stylew.container}>
       <FlatList

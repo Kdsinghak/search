@@ -1,26 +1,27 @@
 import firestore from '@react-native-firebase/firestore';
 
-export const handleOnblur = (
-  displayName: string,
+export const saveDataOnFirebase = (
   uid: string,
   email: string,
   search: string,
   recentSearch: Array<string>,
 ) => {
-  let index = recentSearch.findIndex(item => item === search);
-
+  let newSearcn = search.trim();
+  let index = recentSearch.findIndex(item => item === newSearcn);
   if (index != -1) {
     recentSearch.splice(index, 1);
   }
-
-  recentSearch.unshift(search);
-
-  if (search.length >= 1) {
-    firestore().collection('Users').doc(uid).set({
-      name: displayName,
-      email: email,
-      search: recentSearch,
-    });
+  if (newSearcn.length >= 2) {
+    recentSearch.unshift(newSearcn);
+    console.log('save data in firebase', newSearcn);
+    firestore()
+      .collection('Users')
+      .doc(uid)
+      .set({
+        email: email,
+        search: recentSearch,
+      })
+      .then(res => console.log(res));
   }
 };
 
@@ -29,5 +30,8 @@ export const getDatafromfireBase = (uid: string, sucessCallBack: Function) => {
     .collection('Users')
     .doc(uid)
     .get()
-    .then(res => sucessCallBack(res._data.search));
+    .then(res => sucessCallBack(res._data.search))
+    .catch(error => {
+      console.log(error);
+    });
 };

@@ -23,10 +23,11 @@ export default function Login() {
       case 'google':
         return googleSignIn(
           (sucess: any) => {
-            Alert.alert('sign In Sucessfull');
+            // Alert.alert('sign In Sucessfull');
+            console.log(sucess);
           },
           (error: any) => {
-            console.log(error);
+            Alert.alert(error.message);
           },
         );
       case 'Email SignIn':
