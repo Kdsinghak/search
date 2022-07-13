@@ -14,14 +14,13 @@ export default function Setting() {
 
   const signOut = () => {
     handleSignOut(
-      (sucess: any) => {
-        Alert.alert('Logout Sucessfull');
-      },
+      (sucess: any) => {},
       (error: any) => {
         Alert.alert('something Wrong');
       },
     );
   };
+
   const handleNavigation = () => {
     navigation.goBack();
   };

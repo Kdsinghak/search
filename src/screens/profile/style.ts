@@ -6,22 +6,23 @@ const styles = StyleSheet.create({
   },
   innerView: {
     width: '85%',
-    height: '60%',
-    marginTop: 20,
-    marginLeft: 40,
-    borderWidth: 1,
+    height: '40%',
+
     borderRadius: 10,
-    overflow: 'hidden',
-    justifyContent: 'center',
+    // overflow: 'hidden',
+    // backgroundColor: 'green',
   },
   innerView2: {
     flex: 1,
-    marginTop: 20,
+    // marginTop: 20,
+
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   profileIcon: {
     height: '100%',
     width: '100%',
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   heading: {
     fontSize: 20,
@@ -36,10 +37,12 @@ const styles = StyleSheet.create({
   displayNameText: {
     fontSize: 30,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   username: {
     color: 'grey',
-    marginVertical: 5,
+    marginVertical: 15,
+    lineHeight: 30,
   },
   descriptionView: {
     marginTop: 10,

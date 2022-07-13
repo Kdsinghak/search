@@ -19,10 +19,10 @@ import {saveDataOnFirebase, getDatafromfireBase} from './action';
 import SearchResultFlatlist from '../../customComponents/SearchResultFlatlist';
 
 function Home({route}: any) {
-  const [{displayName, email, uid}] = route.params.user._user.providerData;
   const flatListRef = useRef(null);
   const navigation: any = useNavigation();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [{email, uid}] = route.params.user._user.providerData;
 
   const debounce = (fun: Function, timeout: number) => {
     let timer: string | number | NodeJS.Timeout | undefined;
@@ -32,6 +32,7 @@ function Home({route}: any) {
       timer = setTimeout(() => {
         dispatch({type: 'data', payload: {data: []}});
         fun(args);
+        saveDataOnFirebase(uid, email, args, state.recentSearch);
       }, timeout);
     };
   };
@@ -43,7 +44,6 @@ function Home({route}: any) {
         state.offset,
 
         (Details: string | []) => {
-          saveDataOnFirebase(uid, email, search, state.recentSearch);
           if (Details.length === 0) {
             dispatch({type: 'loding', payload: {loding: false}});
           } else {
@@ -76,12 +76,13 @@ function Home({route}: any) {
       <View style={styles.header}>
         <Text style={styles.heading}>Search</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
-          <Icon name="setting" size={30} />
+          <Icon name="setting" size={30} color={'#fc1655'} />
         </TouchableOpacity>
       </View>
 
       <TextInput
         placeholder="Search"
+        placeholderTextColor={'#6d757f'}
         style={styles.txtinput}
         onFocus={() => {
           if (state.data.length > 0) {
@@ -106,7 +107,7 @@ function Home({route}: any) {
           ref={flatListRef}
         />
       ) : (
-        <ActivityIndicator size="large" animating={true} color="red" />
+        <ActivityIndicator size="large" animating={true} color="#fefefe" />
       )}
 
       <TouchableOpacity
@@ -114,11 +115,15 @@ function Home({route}: any) {
         onPress={() => {
           flatListRef.current.scrollToOffset({offset: 0});
         }}>
-        <Icon name={'arrowup'} size={30} />
+        <Icon name={'arrowup'} size={30} color={'white'} />
       </TouchableOpacity>
 
       {state.loding && state.data.length >= 0 ? (
-        <ActivityIndicator size="large" animating={state.loding} color="blue" />
+        <ActivityIndicator
+          size="large"
+          animating={state.loding}
+          color="#fefefe"
+        />
       ) : null}
     </SafeAreaView>
   );

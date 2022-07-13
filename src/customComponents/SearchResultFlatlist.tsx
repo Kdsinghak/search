@@ -8,9 +8,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import React, {forwardRef} from 'react';
 import {colors} from '../utils';
 import {propsType} from '../modal';
+import React, {forwardRef} from 'react';
 import styles from '../screens/home/style';
 import callingAPI from '../action/callingAPI';
 import {useNavigation} from '@react-navigation/native';
@@ -44,19 +44,23 @@ const SearchResultFlatlist = forwardRef((props: any, ref) => {
   };
 
   const renderItem = ({item, index}: {item: propsType; index: number}) => {
-    let color = colors[index % colors.length];
-
     return (
       <TouchableOpacity
-        style={[styles.Card, {backgroundColor: color}]}
+        style={[
+          styles.Card,
+          {backgroundColor: colors.light[index % colors.light.length]},
+        ]}
         onPress={() => {
-          navigation.navigate('Profile', {item, color: color});
+          navigation.navigate('Profile', {
+            item,
+            color: colors.light[index % colors.light.length],
+          });
         }}>
         <Text style={styles.cardTitle}>{item.title}</Text>
         <View
           style={[
             styles.imageContainer,
-            {backgroundColor: colors[(index % colors.length) / 2]},
+            {backgroundColor: colors.dark[index % colors.dark.length]},
           ]}>
           <Image
             source={{uri: item.images.original.url}}

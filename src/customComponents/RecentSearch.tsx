@@ -1,7 +1,7 @@
-import {View, Text, FlatList, StyleSheet, Alert} from 'react-native';
-import React, {useCallback, useReducer} from 'react';
+import React from 'react';
 import {normalize} from '../utils/dimensions';
 import callingAPI from '../action/callingAPI';
+import {View, Text, FlatList, StyleSheet, Alert} from 'react-native';
 import {saveDataOnFirebase} from '../screens/home/action';
 
 function RecentSearch(props: any) {
@@ -12,8 +12,8 @@ function RecentSearch(props: any) {
   data.splice(5, length);
   const [{email, uid}] = props.userDetails;
 
-  const recentSearchApiCalling = async (item: any) => {
-    await saveDataOnFirebase(uid, email, item, data);
+  const recentSearchApiCalling = (item: any) => {
+    saveDataOnFirebase(uid, email, item, data);
     callingAPI.getApi(
       item,
       0,
@@ -39,15 +39,19 @@ function RecentSearch(props: any) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>RecentSearch</Text>
-      <FlatList
-        data={data}
-        renderItem={_onRenderItem}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
-    </View>
+    <>
+      {data.length > 0 ? (
+        <View style={styles.container}>
+          <Text style={styles.heading}>Recent Search</Text>
+          <FlatList
+            data={data}
+            renderItem={_onRenderItem}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+      ) : null}
+    </>
   );
 }
 
@@ -55,20 +59,29 @@ export default React.memo(RecentSearch);
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: normalize(4),
+    // marginVertical: normalize(5),
+    marginTop: normalize(8),
     marginLeft: normalize(20),
+    // backgroundColor: 'red',
+    height: normalize(60),
+    width: '90%',
   },
   heading: {
     fontWeight: 'bold',
-    marginBottom: normalize(3),
+    marginBottom: normalize(7),
+    color: '#fefefe',
+    paddingLeft: normalize(3),
   },
   card: {
-    backgroundColor: 'black',
+    backgroundColor: '#fc1655',
     marginHorizontal: normalize(3),
     borderRadius: normalize(20),
+    height: normalize(30),
   },
   text: {
     color: 'white',
-    padding: normalize(6),
+    padding: normalize(7),
+    alignSelf: 'center',
+    fontWeight: 'bold',
   },
 });

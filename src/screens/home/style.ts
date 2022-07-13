@@ -1,10 +1,12 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {normalize} from '../../utils/dimensions';
 
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#0d0f18',
   },
   header: {
     flexDirection: 'row',
@@ -17,25 +19,28 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: 'bold',
     marginVertical: '7%',
+    color: '#f2f2f3',
   },
   txtinput: {
     padding: 10,
-    height: '7%',
+    height: '6%',
     width: '90%',
-    borderRadius: 8,
+    borderRadius: 10,
     marginHorizontal: '5%',
-    backgroundColor: '#e7e6ec',
+    backgroundColor: '#ffffff',
+    color: 'black',
   },
   Card: {
     marginTop: '5%',
     borderRadius: 20,
     flexDirection: 'row',
     marginHorizontal: 20,
+    height: 180,
   },
   cardTitle: {
     width: '50%',
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     marginLeft: 10,
     fontWeight: 'bold',
     alignSelf: 'center',
@@ -54,23 +59,25 @@ const styles = StyleSheet.create({
   backToTop: {
     height: 50,
     marginRight: 15,
-    borderRadius: 30,
+    borderRadius: 50,
     marginLeft: '80%',
     position: 'absolute',
     alignItems: 'center',
     marginTop: height - 90,
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#fc1655',
   },
   cardImg: {
-    height: 190,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
+    width: 130,
+    height: 130,
+    borderRadius: 90,
   },
   imageContainer: {
-    flex: 1,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
+    width: 130,
+    height: 130,
+    borderRadius: 90,
+    alignSelf: 'center',
+    marginLeft: normalize(20),
   },
 });
 

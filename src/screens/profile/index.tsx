@@ -23,7 +23,7 @@ export default function Profile({route}: any) {
       <CustomHeader />
 
       <View style={styles.innerView2}>
-        <View style={[styles.innerView, {backgroundColor: color}]}>
+        <View style={styles.innerView}>
           <Image
             onLoadStart={_onLoadStart}
             onLoadEnd={_onLoadEnd}
@@ -33,8 +33,8 @@ export default function Profile({route}: any) {
           {isLoading ? (
             <ActivityIndicator
               style={styles.indicatorstyle}
-              size={'large'}
-              color="white"
+              size="large"
+              color="red"
             />
           ) : null}
         </View>
