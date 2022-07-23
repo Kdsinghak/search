@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {
   View,
   Text,
@@ -7,8 +6,9 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 const {height, width} = Dimensions.get('window');
+import Icon from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 export default function CustomHeader() {
   const navigation = useNavigation();
 
@@ -19,7 +19,7 @@ export default function CustomHeader() {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.BackArrow} onPress={handleNavigation}>
-        <Icon name="arrowleft" size={40} />
+        <Icon name="arrowleft" size={40} color={'#ffffff'} />
       </TouchableOpacity>
       <Text style={styles.headerText}>Detail</Text>
     </View>
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     left: 155,
     bottom: 2,
     fontSize: 30,
+    color: '#ffffff',
     fontWeight: '700',
     position: 'absolute',
   },

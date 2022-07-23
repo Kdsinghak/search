@@ -3,21 +3,17 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#0d0f18',
   },
   innerView: {
     width: '85%',
     height: '40%',
-
     borderRadius: 10,
-    // overflow: 'hidden',
-    // backgroundColor: 'green',
   },
   innerView2: {
     flex: 1,
-    // marginTop: 20,
-
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   profileIcon: {
     height: '100%',
@@ -38,9 +34,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: '#ffffff',
   },
   username: {
-    color: 'grey',
+    color: '#fd1655',
     marginVertical: 15,
     lineHeight: 30,
   },
@@ -54,10 +51,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 5,
     fontWeight: '600',
+    color: '#ffffff',
   },
   indicatorstyle: {
     alignSelf: 'center',
     position: 'absolute',
+  },
+  descriptionLines: {
+    color: '#ffffff',
   },
 });
 

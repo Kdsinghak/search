@@ -6,14 +6,14 @@ export const saveDataOnFirebase = (
   search: string,
   recentSearch: Array<string>,
 ) => {
-  let newSearcn = search.trim();
+  let newSearcn = search.trim().toLowerCase();
   let index = recentSearch.findIndex(item => item === newSearcn);
   if (index != -1) {
     recentSearch.splice(index, 1);
   }
   if (newSearcn.length >= 2) {
     recentSearch.unshift(newSearcn);
-    console.log('save data in firebase', newSearcn);
+    // console.log('save data in firebase', newSearcn);
     firestore()
       .collection('Users')
       .doc(uid)

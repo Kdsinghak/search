@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {normalize} from '../utils/dimensions';
 import callingAPI from '../action/callingAPI';
 import {View, Text, FlatList, StyleSheet, Alert} from 'react-native';
-import {saveDataOnFirebase} from '../screens/home/action';
+import {getDatafromfireBase, saveDataOnFirebase} from '../screens/home/action';
 
 function RecentSearch(props: any) {
-  const {data, dispatch} = props;
-
+  const {data, dispatch, setSearchValue} = props;
+  console.log(props);
   let length = data.length;
 
   data.splice(5, length);
@@ -31,7 +31,12 @@ function RecentSearch(props: any) {
   const _onRenderItem = ({item}: any) => {
     return (
       <View style={styles.card}>
-        <Text onPress={() => recentSearchApiCalling(item)} style={styles.text}>
+        <Text
+          onPress={() => {
+            recentSearchApiCalling(item),
+              dispatch({type: 'search', payload: {search: item}});
+          }}
+          style={styles.text}>
           {item}
         </Text>
       </View>
@@ -59,10 +64,8 @@ export default React.memo(RecentSearch);
 
 const styles = StyleSheet.create({
   container: {
-    // marginVertical: normalize(5),
     marginTop: normalize(8),
     marginLeft: normalize(20),
-    // backgroundColor: 'red',
     height: normalize(60),
     width: '90%',
   },

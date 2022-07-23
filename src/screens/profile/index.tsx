@@ -34,7 +34,7 @@ export default function Profile({route}: any) {
             <ActivityIndicator
               style={styles.indicatorstyle}
               size="large"
-              color="red"
+              color="white"
             />
           ) : null}
         </View>
@@ -45,7 +45,9 @@ export default function Profile({route}: any) {
 
           <View style={styles.descriptionView}>
             <Text style={styles.descriptionText}>Description</Text>
-            <Text numberOfLines={2}>{description}</Text>
+            <Text numberOfLines={2} style={styles.descriptionLines}>
+              {description}
+            </Text>
           </View>
         </View>
       </View>

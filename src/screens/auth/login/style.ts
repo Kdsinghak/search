@@ -11,14 +11,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoStyle: {
-    width: '40%',
+    width: '30%',
     height: '40%',
   },
   textInputStyle: {
     width: '95%',
     color: '#e1e3e6',
     padding: normalize(10),
-    backgroundColor: '#0d0f18',
+
     marginRight: normalize(20),
     borderBottomColor: '#2c3039',
     borderBottomWidth: normalize(2),
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
   },
   TextinputView: {
     width: '90%',
-    marginHorizontal: normalize(20),
+    height: '20%',
+    marginLeft: normalize(20),
   },
   socialButtonView: {
     flexDirection: 'row',

@@ -31,8 +31,8 @@ function Home({route}: any) {
       clearTimeout(timer);
       timer = setTimeout(() => {
         dispatch({type: 'data', payload: {data: []}});
-        fun(args);
         saveDataOnFirebase(uid, email, args, state.recentSearch);
+        fun(args);
       }, timeout);
     };
   };
@@ -65,7 +65,7 @@ function Home({route}: any) {
         payload: {recentSearch: onSucess},
       });
     });
-  }, [state.recentSearch]);
+  }, state.recentSearch);
 
   useEffect(() => {
     processChange(state.search);
@@ -81,6 +81,7 @@ function Home({route}: any) {
       </View>
 
       <TextInput
+        value={state.search}
         placeholder="Search"
         placeholderTextColor={'#6d757f'}
         style={styles.txtinput}

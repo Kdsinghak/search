@@ -1,24 +1,30 @@
 import {
-  View,
   Text,
-  Alert,
+  View,
   Image,
-  FlatList,
+  Alert,
+  Animated,
   Keyboard,
   StyleSheet,
+  Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import {colors} from '../utils';
 import {propsType} from '../modal';
-import React, {forwardRef} from 'react';
 import styles from '../screens/home/style';
 import callingAPI from '../action/callingAPI';
+import React, {forwardRef, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 const SearchResultFlatlist = forwardRef((props: any, ref) => {
   const {dispatch} = props;
   const navigation: any = useNavigation();
+  const {height} = Dimensions.get('window');
   const {data, offset, loding, search} = props.data;
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const AnimatedTouchableOpacity =
+    Animated.createAnimatedComponent(TouchableOpacity);
 
   const onendPage = () => {
     Keyboard.dismiss();
@@ -44,11 +50,44 @@ const SearchResultFlatlist = forwardRef((props: any, ref) => {
   };
 
   const renderItem = ({item, index}: {item: propsType; index: number}) => {
+    const position = Animated.subtract(index * 180, scrollY);
+    const idDisspearing = -180;
+    const isTop = 0;
+    const isBottom = height / 70;
+    const isAppearing = height;
+    const translateY = Animated.add(
+      Animated.add(
+        scrollY,
+        scrollY.interpolate({
+          inputRange: [0, 0.00001 + index * 180],
+          outputRange: [0, -index * 200],
+          extrapolateRight: 'clamp',
+        }),
+      ),
+      position.interpolate({
+        inputRange: [isBottom, isAppearing],
+        outputRange: [0, -180 / 2],
+        extrapolate: 'clamp',
+      }),
+    );
+
+    const scale = position.interpolate({
+      inputRange: [idDisspearing, isTop, isBottom, isAppearing],
+      outputRange: [0.5, 1, 1, 0.5],
+      extrapolate: 'clamp',
+    });
+
+    const opacity = position.interpolate({
+      inputRange: [idDisspearing, isTop, isBottom, isAppearing],
+      outputRange: [0.5, 1, 1, 0.5],
+    });
+
     return (
-      <TouchableOpacity
+      <AnimatedTouchableOpacity
         style={[
           styles.Card,
           {backgroundColor: colors.light[index % colors.light.length]},
+          {opacity, transform: [{translateY}, {scale}]},
         ]}
         onPress={() => {
           navigation.navigate('Profile', {
@@ -67,19 +106,24 @@ const SearchResultFlatlist = forwardRef((props: any, ref) => {
             style={styles.cardImg}
           />
         </View>
-      </TouchableOpacity>
+      </AnimatedTouchableOpacity>
     );
   };
 
   return (
     <View style={stylew.container}>
-      <FlatList
+      <Animated.FlatList
         data={data}
         renderItem={renderItem}
         onEndReachedThreshold={0.5}
         onEndReached={!loding ? onendPage : null}
         keyExtractor={(item, index) => `${item.id}${index.toString()}`}
         ref={ref}
+        scrollEventThrottle={6}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: true},
+        )}
       />
     </View>
   );
