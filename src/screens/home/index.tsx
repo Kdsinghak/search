@@ -19,7 +19,7 @@ import {saveDataOnFirebase, getDatafromfireBase} from './action';
 import SearchResultFlatlist from '../../customComponents/SearchResultFlatlist';
 
 function Home({route}: any) {
-  const flatListRef = useRef(null);
+  const flatListRef: any = useRef(null);
   const navigation: any = useNavigation();
   const [state, dispatch] = useReducer(reducer, initialState);
   const [{email, uid}] = route.params.user._user.providerData;
@@ -65,7 +65,7 @@ function Home({route}: any) {
         payload: {recentSearch: onSucess},
       });
     });
-  }, state.recentSearch);
+  }, [state.recentSearch]);
 
   useEffect(() => {
     processChange(state.search);

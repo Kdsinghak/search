@@ -16,7 +16,7 @@ import callingAPI from '../action/callingAPI';
 import React, {forwardRef, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-const SearchResultFlatlist = forwardRef((props: any, ref) => {
+const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
   const {dispatch} = props;
   const navigation: any = useNavigation();
   const {height} = Dimensions.get('window');
