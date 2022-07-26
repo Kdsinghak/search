@@ -65,7 +65,7 @@ function Home({route}: any) {
         payload: {recentSearch: onSucess},
       });
     });
-  }, [state.recentSearch]);
+  }, state.recentSearch);
 
   useEffect(() => {
     processChange(state.search);
