@@ -13,7 +13,7 @@ export const saveDataOnFirebase = (
   }
   if (newSearcn.length >= 2) {
     recentSearch.unshift(newSearcn);
-    // console.log('save data in firebase', newSearcn);
+
     firestore()
       .collection('Users')
       .doc(uid)

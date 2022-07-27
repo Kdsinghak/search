@@ -23,7 +23,6 @@ export default function Login() {
       case 'google':
         return googleSignIn(
           (sucess: any) => {
-            // Alert.alert('sign In Sucessfull');
             console.log(sucess);
           },
           (error: any) => {

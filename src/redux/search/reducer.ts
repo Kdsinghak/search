@@ -5,12 +5,11 @@ const initialSate = {
 const searchData = (state = initialSate, action: any) => {
   const {type, payload} = action;
   switch (type) {
-    // case value:
-
-    //     break;
+    case 'Search_Data':
+      return {...state, ...payload};
 
     default:
-      break;
+      return state;
   }
 };
 
