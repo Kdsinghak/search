@@ -16,11 +16,18 @@ import callingAPI from '../action/callingAPI';
 import React, {forwardRef, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchData, setLoading} from '../redux/search/action';
+
 const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
-  const {dispatch} = props;
+  const {data, offset, listRef, search, loding, Networkerr, recentSearch} =
+    useSelector(store => store.searchData);
+  const dispatch = useDispatch();
+  // const {dispatch} = props;
   const navigation: any = useNavigation();
   const {height} = Dimensions.get('window');
-  const {data, offset, loding, search} = props.data;
+  // const {search} = props.data;
+
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const AnimatedTouchableOpacity =
@@ -28,25 +35,29 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
 
   const onendPage = () => {
     Keyboard.dismiss();
-    dispatch({type: 'loding', payload: {loding: true}});
-    callingAPI.getApi(
-      search,
-      offset,
-      (Details: Array<[]>) => {
-        dispatch({type: 'loding', payload: {loding: false}});
-        dispatch({type: 'offset', payload: {offset: offset + 10}});
+    // dispatch(setLoading(true));
+    dispatch(fetchData(offset + 10, data, search, loding));
+    // dispatch({type: 'loding', payload: {loding: true}});
+    // callingAPI.getApi(
+    //   search,
+    //   offset,
+    //   (Details: Array<[]>) => {
+    //     dispatch({type: 'loding', payload: {loding: false}});
+    //     dispatch({type: 'offset', payload: {offset: offset + 10}});
 
-        offset === 0
-          ? dispatch({type: 'data', payload: {data: [...Details]}})
-          : dispatch({
-              type: 'data',
-              payload: {data: [...data, ...Details]},
-            });
-      },
-      (error: string) => {
-        Alert.alert(error);
-      },
-    );
+    //     offset === 0
+    //       ? //  dispatch({type: 'data', payload: {data: [...Details]}})
+    //         Dispatch(fetchData(offset, data, search))
+    //       : // dispatch({
+    //         //     type: 'data',
+    //         //     payload: {data: [...data, ...Details]},
+    //         //   });
+    //         Dispatch(fetchData(offset, data, search));
+    //   },
+    //   (error: string) => {
+    //     Alert.alert(error);
+    //   },
+    // );
   };
 
   const renderItem = ({item, index}: {item: propsType; index: number}) => {

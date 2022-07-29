@@ -18,8 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import {saveDataOnFirebase, getDatafromfireBase} from './action';
 import SearchResultFlatlist from '../../customComponents/SearchResultFlatlist';
 import {fetchData} from '../../redux/search/action';
-import {useDispatch} from 'react-redux';
-import {watcherSearchAsync} from '../../redux/search/sagas';
+import {useDispatch, useSelector} from 'react-redux';
 
 function Home({route}: any) {
   const flatListRef: any = useRef(null);
@@ -27,6 +26,8 @@ function Home({route}: any) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [{email, uid}] = route.params.user._user.providerData;
   const Dispatch = useDispatch();
+  const {data, offset, listRef, loding, search, Networkerr, recentSearch} =
+    useSelector(store => store.searchData);
 
   const debounce = (fun: Function, timeout: number) => {
     let timer: string | number | NodeJS.Timeout | undefined;
@@ -43,20 +44,7 @@ function Home({route}: any) {
 
   const processChange = useCallback(
     debounce((search: string) => {
-      callingAPI.getApi(
-        search,
-        state.offset,
-        (Details: string | []) => {
-          if (Details.length === 0) {
-            dispatch({type: 'loding', payload: {loding: false}});
-          } else {
-            dispatch({type: 'data', payload: {data: [...Details]}});
-          }
-        },
-        (error: string) => {
-          Alert.alert(error);
-        },
-      );
+      Dispatch(fetchData(offset, data, search));
     }, 1000),
     [],
   );
@@ -72,7 +60,6 @@ function Home({route}: any) {
 
   useEffect(() => {
     processChange(state.search);
-    Dispatch(fetchData());
   }, [state.search]);
 
   return (
@@ -105,10 +92,10 @@ function Home({route}: any) {
         userDetails={route.params.user._user.providerData}
       />
 
-      {state.data.length > 0 ? (
+      {data.length > 0 ? (
         <SearchResultFlatlist
-          data={state}
-          dispatch={dispatch}
+          // data={state}
+          // dispatch={dispatch}
           ref={flatListRef}
         />
       ) : (
