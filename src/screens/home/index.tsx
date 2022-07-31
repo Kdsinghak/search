@@ -11,23 +11,28 @@ import {
 
 import styles from './style';
 import {reducer, initialState} from './reducer';
-import callingAPI from '../../action/callingAPI';
 import {RecentSearch} from '../../customComponents';
+import {
+  fetchData,
+  setDataFromFirebase,
+  setDataOnFirebase,
+} from '../../redux/search/action';
+// import callingAPI from '../../action/callingAPI';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import {saveDataOnFirebase, getDatafromfireBase} from './action';
 import SearchResultFlatlist from '../../customComponents/SearchResultFlatlist';
-import {fetchData} from '../../redux/search/action';
-import {useDispatch, useSelector} from 'react-redux';
 
 function Home({route}: any) {
+  const Dispatch = useDispatch();
   const flatListRef: any = useRef(null);
   const navigation: any = useNavigation();
   const [state, dispatch] = useReducer(reducer, initialState);
   const [{email, uid}] = route.params.user._user.providerData;
-  const Dispatch = useDispatch();
-  const {data, offset, listRef, loding, search, Networkerr, recentSearch} =
-    useSelector(store => store.searchData);
+  const {data, offset, listRef, search, Networkerr, recentSearch} = useSelector(
+    store => store.searchData,
+  );
 
   const debounce = (fun: Function, timeout: number) => {
     let timer: string | number | NodeJS.Timeout | undefined;
@@ -51,12 +56,9 @@ function Home({route}: any) {
 
   useEffect(() => {
     getDatafromfireBase(uid, (onSucess: any) => {
-      dispatch({
-        type: 'RecentSearch',
-        payload: {recentSearch: onSucess},
-      });
+      Dispatch(setDataFromFirebase(onSucess));
     });
-  }, state.recentSearch);
+  }, [state.search]);
 
   useEffect(() => {
     processChange(state.search);
@@ -87,8 +89,8 @@ function Home({route}: any) {
       />
 
       <RecentSearch
-        data={state.recentSearch}
-        dispatch={dispatch}
+        // data={state.recentSearch}
+        // dispatch={dispatch}
         userDetails={route.params.user._user.providerData}
       />
 
@@ -110,13 +112,9 @@ function Home({route}: any) {
         <Icon name={'arrowup'} size={30} color={'white'} />
       </TouchableOpacity>
 
-      {state.loding && state.data.length >= 0 ? (
-        <ActivityIndicator
-          size="large"
-          animating={state.loding}
-          color="#fefefe"
-        />
-      ) : null}
+      {/* {loding && data.length >= 0 ? (
+        <ActivityIndicator size="large" animating={loding} color="red" />
+      ) : null} */}
     </SafeAreaView>
   );
 }

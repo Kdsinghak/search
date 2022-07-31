@@ -2,8 +2,12 @@ export const fetchData = (page: number, data: any, search: any) => {
   return {type: 'Fetch_Data', page, data, search};
 };
 
-export const setLoading = (loading: boolean) => {
-  return {type: 'loading', loading};
+export const beginLoading = () => {
+  return {type: 'Search_Data', payload: {loding: true}};
+};
+
+export const endLoading = () => {
+  return {type: 'Search_Data', payload: {loding: false}};
 };
 
 export const setData = (searchData: any, page: number, search: string) => {
@@ -19,9 +23,19 @@ export const addData = (
   page: any,
   search: any,
 ) => {
-  console.log('data add ');
   return {
     type: 'Search_Data',
-    payload: {data: [...prevData, ...newData], offset: page, search: search},
+    payload: {
+      data: [...prevData, ...newData],
+      offset: page,
+      search: search,
+    },
+  };
+};
+
+export const setDataFromFirebase = (item: any) => {
+  return {
+    type: 'Search_Data',
+    payload: {recentSearch: item},
   };
 };

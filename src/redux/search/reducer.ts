@@ -29,4 +29,20 @@ const searchData = (
   }
 };
 
-export default searchData;
+// const loading = {
+//   isloading: false,
+// };
+
+// const Loader = (state = loading, action: any) => {
+//   const {type, payload} = action;
+
+//   switch (type) {
+//     case 'isloading':
+//       return {payload};
+
+//     default:
+//       return state;
+//   }
+// };
+
+export {searchData};

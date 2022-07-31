@@ -8,20 +8,23 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {colors} from '../utils';
 import {propsType} from '../modal';
 import styles from '../screens/home/style';
 import callingAPI from '../action/callingAPI';
-import React, {forwardRef, useRef} from 'react';
+import React, {forwardRef, useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchData, setLoading} from '../redux/search/action';
+import {beginLoading, endLoading, fetchData} from '../redux/search/action';
 
 const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
-  const {data, offset, listRef, search, loding, Networkerr, recentSearch} =
-    useSelector(store => store.searchData);
+  const {data, offset, listRef, search, loding, recentSearch} = useSelector(
+    store => store.searchData,
+  );
+
   const dispatch = useDispatch();
   // const {dispatch} = props;
   const navigation: any = useNavigation();
@@ -35,8 +38,10 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
 
   const onendPage = () => {
     Keyboard.dismiss();
-    // dispatch(setLoading(true));
-    dispatch(fetchData(offset + 10, data, search, loding));
+
+    dispatch(fetchData(offset + 10, data, search));
+
+    // setLoading(false);
     // dispatch({type: 'loding', payload: {loding: true}});
     // callingAPI.getApi(
     //   search,
@@ -136,6 +141,9 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
           {useNativeDriver: true},
         )}
       />
+      {loding && data.length >= 0 ? (
+        <ActivityIndicator size="large" animating={loding} color="red" />
+      ) : null}
     </View>
   );
 });
