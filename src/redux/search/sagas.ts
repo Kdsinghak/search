@@ -1,17 +1,25 @@
 import {put, takeEvery, call, delay} from 'redux-saga/effects';
+import {saveDataOnFirebase} from '../../screens/home/action';
 import getSearchData from '../../services/searchServices';
 
 import {addData, beginLoading, endLoading, setData} from './action';
 
+/**
+ * generatior function for api call , loading , pagination
+ * @param action
+ */
+
 export function* searchDataAsync(action: any) {
-  const {page, search} = action;
+  const {page, search, uid, email, recentSearch} = action;
+
   yield put(beginLoading());
-  delay(5000);
+
   try {
-    const data = yield call(() => getSearchData(page, search));
+    const data = yield call(getSearchData, page, search);
 
     if (action.page === 0) {
       yield put(setData(data, page, search));
+      if (data.length > 0) saveDataOnFirebase(uid, email, search, recentSearch);
     } else {
       yield put(addData(action.data, data, page, search));
     }
@@ -20,6 +28,10 @@ export function* searchDataAsync(action: any) {
     yield put(endLoading());
   }
 }
+
+/**
+ * generator function which match the type and after matching a function acync task run
+ */
 
 export function* watcherSearchAsync() {
   yield takeEvery('Fetch_Data', searchDataAsync);

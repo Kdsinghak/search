@@ -2,7 +2,6 @@ import React, {useRef, useEffect, useReducer, useCallback} from 'react';
 import {
   View,
   Text,
-  Alert,
   TextInput,
   SafeAreaView,
   TouchableOpacity,
@@ -10,18 +9,13 @@ import {
 } from 'react-native';
 
 import styles from './style';
+import {getDatafromfireBase} from './action';
 import {reducer, initialState} from './reducer';
 import {RecentSearch} from '../../customComponents';
-import {
-  fetchData,
-  setDataFromFirebase,
-  setDataOnFirebase,
-} from '../../redux/search/action';
-// import callingAPI from '../../action/callingAPI';
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
-import {saveDataOnFirebase, getDatafromfireBase} from './action';
+import {fetchData, setDataFromFirebase} from '../../redux/search/action';
 import SearchResultFlatlist from '../../customComponents/SearchResultFlatlist';
 
 function Home({route}: any) {
@@ -30,18 +24,13 @@ function Home({route}: any) {
   const navigation: any = useNavigation();
   const [state, dispatch] = useReducer(reducer, initialState);
   const [{email, uid}] = route.params.user._user.providerData;
-  const {data, offset, listRef, search, Networkerr, recentSearch} = useSelector(
-    store => store.searchData,
-  );
+  const {data, offset, recentSearch} = useSelector(store => store.searchData);
 
   const debounce = (fun: Function, timeout: number) => {
     let timer: string | number | NodeJS.Timeout | undefined;
-
     return (args: string) => {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        dispatch({type: 'data', payload: {data: []}});
-        saveDataOnFirebase(uid, email, args, state.recentSearch);
         fun(args);
       }, timeout);
     };
@@ -49,7 +38,7 @@ function Home({route}: any) {
 
   const processChange = useCallback(
     debounce((search: string) => {
-      Dispatch(fetchData(offset, data, search));
+      Dispatch(fetchData(offset, data, search, uid, email, state.recentSearch));
     }, 1000),
     [],
   );
@@ -58,7 +47,7 @@ function Home({route}: any) {
     getDatafromfireBase(uid, (onSucess: any) => {
       Dispatch(setDataFromFirebase(onSucess));
     });
-  }, [state.search]);
+  }, recentSearch);
 
   useEffect(() => {
     processChange(state.search);
@@ -79,7 +68,7 @@ function Home({route}: any) {
         placeholderTextColor={'#6d757f'}
         style={styles.txtinput}
         onFocus={() => {
-          if (state.data.length > 0) {
+          if (data.length > 0) {
             flatListRef.current.scrollToOffset({offset: 0});
           }
         }}
@@ -89,17 +78,13 @@ function Home({route}: any) {
       />
 
       <RecentSearch
-        // data={state.recentSearch}
-        // dispatch={dispatch}
         userDetails={route.params.user._user.providerData}
+        search={state.search}
+        dispatch={dispatch}
       />
 
       {data.length > 0 ? (
-        <SearchResultFlatlist
-          // data={state}
-          // dispatch={dispatch}
-          ref={flatListRef}
-        />
+        <SearchResultFlatlist ref={flatListRef} />
       ) : (
         <ActivityIndicator size="large" animating={true} color="#fefefe" />
       )}
@@ -111,10 +96,6 @@ function Home({route}: any) {
         }}>
         <Icon name={'arrowup'} size={30} color={'white'} />
       </TouchableOpacity>
-
-      {/* {loding && data.length >= 0 ? (
-        <ActivityIndicator size="large" animating={loding} color="red" />
-      ) : null} */}
     </SafeAreaView>
   );
 }

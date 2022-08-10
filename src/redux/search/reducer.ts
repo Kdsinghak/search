@@ -1,12 +1,23 @@
+/**
+ * initial state for a full searching
+ */
+
 const initialState = {
   data: [],
   offset: 0,
   listRef: null,
   loding: false,
-  search: '',
+  search: 'heart',
   Networkerr: false,
   recentSearch: [],
 };
+
+/**
+ * reducer function  which contains a initial state and payload
+ * @param state
+ * @param action
+ * @returns  a state based on switch conditions
+ */
 
 const searchData = (
   state = initialState,
@@ -29,20 +40,25 @@ const searchData = (
   }
 };
 
-// const loading = {
-//   isloading: false,
-// };
+const userDetail = {
+  email: '',
+  userId: '',
+  search: '',
+  recentSearch: '',
+};
 
-// const Loader = (state = loading, action: any) => {
-//   const {type, payload} = action;
+/**
+ * reducer function for  setting a user details whose logged in the app
+ */
 
-//   switch (type) {
-//     case 'isloading':
-//       return {payload};
+const userDetails = (state = userDetail, action: any) => {
+  const {type, payload} = action();
+  switch (type) {
+    case 'setUserDetails':
+      return {...state, ...payload};
+    default:
+      return state;
+  }
+};
 
-//     default:
-//       return state;
-//   }
-// };
-
-export {searchData};
+export {searchData, userDetails};
