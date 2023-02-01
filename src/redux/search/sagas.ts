@@ -16,6 +16,7 @@ export function* searchDataAsync(action: any) {
 
   try {
     const data = yield call(getSearchData, page, search);
+    // call->call doesn't execute the effect, it just creates a plain object like {type: 'CALL', func, args}
 
     if (action.page === 0) {
       yield put(setData(data, page, search));

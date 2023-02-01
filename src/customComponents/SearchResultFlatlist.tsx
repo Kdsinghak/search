@@ -75,7 +75,8 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
         style={[
           styles.Card,
           {backgroundColor: colors.light[index % colors.light.length]},
-          {opacity, transform: [{translateY}, {scale}]},
+          // {opacity, transform: [{translateY}, {scale}]},
+          {transform: [{translateY}]},
         ]}
         onPress={() => {
           navigation.navigate('Profile', {
