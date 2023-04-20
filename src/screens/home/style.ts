@@ -1,7 +1,7 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import {normalize} from '../../utils/dimensions';
 
-const {height, width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -10,32 +10,32 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: '6%',
+    justifyContent: 'space-between',
   },
   heading: {
     left: '10%',
     fontSize: 35,
+    color: '#f2f2f3',
     fontWeight: 'bold',
     marginVertical: '7%',
-    color: '#f2f2f3',
   },
   txtinput: {
     padding: 10,
     height: '6%',
     width: '90%',
+    color: 'black',
     borderRadius: 10,
     marginHorizontal: '5%',
     backgroundColor: '#ffffff',
-    color: 'black',
   },
   Card: {
+    height: 180,
     marginTop: '5%',
     borderRadius: 20,
     flexDirection: 'row',
     marginHorizontal: 20,
-    height: 180,
   },
   cardTitle: {
     width: '50%',

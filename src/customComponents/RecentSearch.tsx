@@ -1,31 +1,24 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React from 'react';
 import {normalize} from '../utils/dimensions';
-import callingAPI from '../action/callingAPI';
-import {View, Text, FlatList, StyleSheet, Alert} from 'react-native';
-import {getDatafromfireBase, saveDataOnFirebase} from '../screens/home/action';
+
+import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {saveDataOnFirebase} from '../screens/home/action';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchData} from '../redux/search/action';
 
 function RecentSearch(props: any) {
-  const {data, dispatch, setSearchValue} = props;
+  const {recentSearch} = useSelector(store => store.searchData);
+  const Dispatch = useDispatch();
   console.log(props);
-  let length = data.length;
+  const {dispatch} = props;
+  let length = recentSearch.length;
 
-  data.splice(5, length);
+  recentSearch.splice(5, length);
   const [{email, uid}] = props.userDetails;
 
   const recentSearchApiCalling = (item: any) => {
-    saveDataOnFirebase(uid, email, item, data);
-    callingAPI.getApi(
-      item,
-      0,
-      (sucess: any) => {
-        dispatch({type: 'data', payload: {data: [...sucess]}});
-
-        dispatch({type: 'RecentSearch', payload: {search: item}});
-      },
-      (error: any) => {
-        Alert.alert(error.message);
-      },
-    );
+    saveDataOnFirebase(uid, email, item, recentSearch);
+    Dispatch(fetchData(0, [], item));
   };
 
   const _onRenderItem = ({item}: any) => {
@@ -33,8 +26,8 @@ function RecentSearch(props: any) {
       <View style={styles.card}>
         <Text
           onPress={() => {
-            recentSearchApiCalling(item),
-              dispatch({type: 'search', payload: {search: item}});
+            recentSearchApiCalling(item);
+            dispatch({type: 'search', payload: {search: item}});
           }}
           style={styles.text}>
           {item}
@@ -45,11 +38,11 @@ function RecentSearch(props: any) {
 
   return (
     <>
-      {data.length > 0 ? (
+      {recentSearch.length > 0 ? (
         <View style={styles.container}>
           <Text style={styles.heading}>Recent Search</Text>
           <FlatList
-            data={data}
+            data={recentSearch}
             renderItem={_onRenderItem}
             horizontal
             showsHorizontalScrollIndicator={false}

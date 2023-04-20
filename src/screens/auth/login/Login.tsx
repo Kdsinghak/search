@@ -1,12 +1,12 @@
 import styles from '../login/style';
-import React, {useState} from 'react';
-import {Images} from '../../../utils';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {emailSignin, googleSignIn} from './LoginUtils';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {passwordTest, emailTest} from '../../../utils/regex';
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import {CustomTextInput, CustomButton} from '../../../customComponents';
+import analytics, {firebase} from '@react-native-firebase/analytics';
 
 export default function Login() {
   var isDisable = true;
@@ -18,12 +18,21 @@ export default function Login() {
     navigation.navigate('SignUp');
   };
 
-  const handleSignIn = (type: string) => {
+  useEffect(() => {
+    firebase.analytics().setAnalyticsCollectionEnabled(true);
+  }, []);
+
+  const handleSignIn = async (type: string) => {
+    // await analytics().logEvent('error', {
+    //   email,
+    //   password,
+    // });
+    const appInstanceId = await analytics().getAppInstanceId();
+    console.log(appInstanceId);
     switch (type) {
       case 'google':
         return googleSignIn(
           (sucess: any) => {
-            // Alert.alert('sign In Sucessfull');
             console.log(sucess);
           },
           (error: any) => {
@@ -47,7 +56,10 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <View style={styles.imageView}>
-        <Image source={Images.Logo} style={styles.logoStyle} />
+        <Image
+          source={require('../../../assests/images/logo.png')}
+          style={styles.logoStyle}
+        />
       </View>
       <View style={styles.TextinputView}>
         <CustomTextInput

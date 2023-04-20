@@ -3,7 +3,7 @@ const initialState = {
   offset: 0,
   listRef: null,
   loding: false,
-  search: '',
+  search: 'heart',
   Networkerr: false,
   recentSearch: [],
 };

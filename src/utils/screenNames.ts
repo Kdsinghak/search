@@ -1,8 +1,8 @@
-interface  screenNames {
-    home : string
+interface screenNames {
+  home: string;
 }
-const  screenNames: screenNames={
-    home : 'Home'
-}
+const screenNames: screenNames = {
+  home: 'Home',
+};
 
-export default screenNames
+export default screenNames;

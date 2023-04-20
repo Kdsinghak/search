@@ -11,7 +11,6 @@ export default function SplashScreen() {
     const suscriber = auth().onAuthStateChanged(user => {
       if (user) {
         setTimeout(() => navigation.navigate('Home', {user}), 1000);
-        // console.log(' bfghcfg', user);
       } else {
         setTimeout(() => navigation.navigate('Login'), 1000);
       }

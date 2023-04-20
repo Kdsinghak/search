@@ -2,25 +2,31 @@ import {
   Text,
   View,
   Image,
-  Alert,
   Animated,
   Keyboard,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {colors} from '../utils';
 import {propsType} from '../modal';
 import styles from '../screens/home/style';
-import callingAPI from '../action/callingAPI';
+
 import React, {forwardRef, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchData} from '../redux/search/action';
+
 const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
-  const {dispatch} = props;
+  const {data, offset, search, loding} = useSelector(store => store.searchData);
+
+  const dispatch = useDispatch();
+
   const navigation: any = useNavigation();
   const {height} = Dimensions.get('window');
-  const {data, offset, loding, search} = props.data;
+
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const AnimatedTouchableOpacity =
@@ -28,25 +34,7 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
 
   const onendPage = () => {
     Keyboard.dismiss();
-    dispatch({type: 'loding', payload: {loding: true}});
-    callingAPI.getApi(
-      search,
-      offset,
-      (Details: Array<[]>) => {
-        dispatch({type: 'loding', payload: {loding: false}});
-        dispatch({type: 'offset', payload: {offset: offset + 10}});
-
-        offset === 0
-          ? dispatch({type: 'data', payload: {data: [...Details]}})
-          : dispatch({
-              type: 'data',
-              payload: {data: [...data, ...Details]},
-            });
-      },
-      (error: string) => {
-        Alert.alert(error);
-      },
-    );
+    dispatch(fetchData(offset + 10, data, search));
   };
 
   const renderItem = ({item, index}: {item: propsType; index: number}) => {
@@ -88,6 +76,7 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
           styles.Card,
           {backgroundColor: colors.light[index % colors.light.length]},
           {opacity, transform: [{translateY}, {scale}]},
+          // {transform: [{translateY}]},
         ]}
         onPress={() => {
           navigation.navigate('Profile', {
@@ -125,6 +114,9 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
           {useNativeDriver: true},
         )}
       />
+      {loding && data.length >= 0 ? (
+        <ActivityIndicator size="large" animating={loding} color="red" />
+      ) : null}
     </View>
   );
 });
