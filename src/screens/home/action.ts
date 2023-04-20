@@ -1,5 +1,4 @@
 import firestore from '@react-native-firebase/firestore';
-
 export const saveDataOnFirebase = (
   uid: string,
   email: string,
@@ -8,7 +7,7 @@ export const saveDataOnFirebase = (
 ) => {
   let newSearch = search.trim().toLowerCase();
   let index = recentSearch.findIndex(item => item === newSearch);
-  if (index != -1) {
+  if (index !== -1) {
     recentSearch.splice(index, 1);
   }
   if (newSearch.length >= 2) {
@@ -29,9 +28,7 @@ export const getDatafromfireBase = (uid: string, sucessCallBack: Function) => {
   firestore()
     .collection('Users')
     .doc(uid)
-    .get()
-    .then(res => sucessCallBack(res._data.search))
-    .catch(error => {
-      console.log(error);
+    .onSnapshot((res: any) => {
+      sucessCallBack(res.data().search);
     });
 };

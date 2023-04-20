@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import {fetchData, setDataFromFirebase} from '../../redux/search/action';
 import SearchResultFlatlist from '../../customComponents/SearchResultFlatlist';
-
+import {put, call} from 'redux-saga/effects';
 function Home({route}: any) {
   const Dispatch = useDispatch();
   const flatListRef: any = useRef(null);
@@ -39,6 +39,7 @@ function Home({route}: any) {
   const processChange = useCallback(
     debounce((search: string) => {
       Dispatch(fetchData(offset, data, search, uid, email, state.recentSearch));
+      // put(fetchData(offset, data, search, uid, email, state.recentSearch));
     }, 1000),
     [],
   );
@@ -46,11 +47,14 @@ function Home({route}: any) {
   useEffect(() => {
     getDatafromfireBase(uid, (onSucess: any) => {
       Dispatch(setDataFromFirebase(onSucess));
+      // put(setDataFromFirebase(onSucess));
     });
-  }, recentSearch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     processChange(state.search);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.search]);
 
   return (

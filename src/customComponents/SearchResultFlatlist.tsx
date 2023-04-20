@@ -26,7 +26,7 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
 
   const navigation: any = useNavigation();
   const {height} = Dimensions.get('window');
-  const tectref = useRef(null);
+
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const AnimatedTouchableOpacity =
@@ -75,8 +75,8 @@ const SearchResultFlatlist = forwardRef((props: any, ref: any) => {
         style={[
           styles.Card,
           {backgroundColor: colors.light[index % colors.light.length]},
-          // {opacity, transform: [{translateY}, {scale}]},
-          {transform: [{translateY}]},
+          {opacity, transform: [{translateY}, {scale}]},
+          // {transform: [{translateY}]},
         ]}
         onPress={() => {
           navigation.navigate('Profile', {

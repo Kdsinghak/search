@@ -1,4 +1,4 @@
-import {put, takeEvery, call, delay} from 'redux-saga/effects';
+import {put, takeEvery, call} from 'redux-saga/effects';
 import {saveDataOnFirebase} from '../../screens/home/action';
 import getSearchData from '../../services/searchServices';
 
@@ -20,7 +20,9 @@ export function* searchDataAsync(action: any) {
 
     if (action.page === 0) {
       yield put(setData(data, page, search));
-      if (data.length > 0) saveDataOnFirebase(uid, email, search, recentSearch);
+      if (data.length > 0) {
+        saveDataOnFirebase(uid, email, search, recentSearch);
+      }
     } else {
       yield put(addData(action.data, data, page, search));
     }

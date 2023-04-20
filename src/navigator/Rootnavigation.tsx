@@ -4,14 +4,36 @@ import Profile from '../screens/profile';
 import {Login, SignUp} from '../screens/auth';
 import Setting from '../screens/setting/Setting';
 import SplashScreen from '../screens/SplashScreen';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import analytics from '@react-native-firebase/analytics';
 const Stack = createNativeStackNavigator();
 
 export default function Rootnavigation() {
+  const routeNameRef = React.useRef();
+  const navigationRef = useNavigationContainerRef();
+
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+      }}
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+        if (previousRouteName !== currentRouteName) {
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
+        }
+        routeNameRef.current = currentRouteName;
+      }}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Login" component={Login} />
